@@ -32,7 +32,7 @@ export class MainHeaderComponent implements OnInit {
   }
   changeButtonInfo() {
     if (this.isAuth) {
-      this.homeDashboard = { title: 'Dashboard', link: '/home', icon: 'table_chart' };
+      this.homeDashboard = { title: 'Dashboard', link: '/quizzie', icon: 'table_chart' };
       this.loginLogout = { title: 'Logout', link: '/auth', icon: 'account_circle' };
     } else {
       this.homeDashboard = { title: 'Home', link: '/home', icon: 'home' };
