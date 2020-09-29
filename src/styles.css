@@ -1,1 +1,120 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.pop-up-msg {
+  color: white;
+  background-color: #343a40;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.bg-dark {
+  background-color: #343a40 !important;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.p-1 {
+  padding: 1rem
+}
+
+.p-2 {
+  padding: 2rem;
+}
+
+.p-3 {
+  padding: 3rem;
+}
+
+.pt-1 {
+  padding-top: 1rem;
+}
+
+.pb-2 {
+  padding-bottom: 2rem;
+}
+
+.text-white {
+  color: white;
+}
+
+.font-italic {
+  font-style: italic;
+}
+
+.primary {
+  background-color: #7b1fa2;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+
+
+.m-0 {
+  margin: 0;
+}
+
+.m-1 {
+  margin: 1rem;
+}
+
+.m-2 {
+  margin: 2rem;
+}
+
+.ml-0 {
+  margin-left: 0;
+}
+
+
+
+.mr-0 {
+  margin-right: 0;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+
+.mt-3 {
+  margin-top: 3rem;
+}
+
+.mx-2 {
+  margin: 0 2rem;
+}
+
+.my-2 {
+  margin: 2rem 0;
+}
+
+.full-width {
+  width: 100%
+}
+
+.background-img {
+  background-image: url('./assets/images/background.jpg');
+}

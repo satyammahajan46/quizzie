@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-sm-12 flex justify-content-center my-2 p-3">
+    <mat-card>
+      <div class="col-sm-12 flex justify-content-center" *ngIf="isLoading()">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!isLoading()">
+        <mat-card-title>
+          Register
+        </mat-card-title>
+        <form [formGroup]="signUpform" (ngSubmit)="onSubmit()">
+          <mat-card-content>
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Name</mat-label>
+              <input formControlName="name" matInput type="text" placeholder="Jane Doe" value="">
+              <mat-error *ngIf="getFormControls().name.errors">{{getErrorMessage("name")}}</mat-error>
+              <mat-error *ngIf="getFormControls().name.errors?.serverError">
+                {{getFormControls().name.errors.serverError}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Email</mat-label>
+              <input formControlName="email" matInput type="email" placeholder="example@example.com" value="">
+              <mat-error *ngIf="getFormControls().email.errors">{{getErrorMessage("email")}}</mat-error>
+              <mat-error *ngIf="getFormControls().email.errors?.serverError">
+                {{getFormControls().email.errors.serverError}}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Password</mat-label>
+              <input formControlName="password" matInput type="password" placeholder="" value="">
+              <mat-error *ngIf="getFormControls().password.errors">{{getErrorMessage("password")}}</mat-error>
+              <mat-error *ngIf="getFormControls().password.errors?.serverError">
+                {{getFormControls().password.errors.serverError}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" color="accent">
+              <mat-label>Confirm Password</mat-label>
+              <input formControlName="cPassword" matInput type="password" placeholder="" value="">
+              <mat-error *ngIf="getFormControls().cPassword.errors">{{getErrorMessage("cPassword")}}</mat-error>
+              <mat-error *ngIf="getFormControls().cPassword.errors?.serverError">
+                {{getFormControls().cPassword.errors.serverError}}
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="accent" type="submit">Register</button>
+            <!-- <mat-error class="pt-1" *ngIf="isError()">
+              {{getNameError()}}<br>
+              {{getEmailError()}}<br>
+              {{getPasswordError()}}<br>
+              {{getCPasswordError()}}
+            </mat-error> -->
+          </mat-card-actions>
+        </form>
+        <mat-divider></mat-divider>
+        <mat-card-footer>
+          <p class="mat-f-m">
+            <a style="font-size: 1.4rem;" routerLink="/auth/signin">
+              Back to login?
+            </a>
+          </p>
+        </mat-card-footer>
+      </div>
+
+    </mat-card>
+  </div>
+</div>

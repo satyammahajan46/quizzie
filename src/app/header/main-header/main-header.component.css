@@ -1,0 +1,12 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-icon {
+  margin: auto;
+}
+
+.icon span {
+  padding: 5px;
+
+}

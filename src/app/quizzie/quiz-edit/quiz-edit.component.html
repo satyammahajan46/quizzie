@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h1 *ngIf="!editMode">Create a Quiz</h1>
+    <h1 *ngIf="editMode">Edit Quiz</h1>
+  </div>
+
+  <!-- quiz with question from -->
+  <div class="col-sm-12">
+    <mat-card>
+      <form [formGroup]="quizForm">
+        <mat-card-content>
+          <div formArrayName="questions" *ngFor="let question of getArrayControl(); let i=index">
+            <div [formGroupName]="i">
+              <h4>Question {{i+1}}</h4>
+              <mat-form-field class="full-width">
+                <mat-label>
+                  Question
+                </mat-label>
+                <input formControlName="question" matInput type="text" placeholder="What is 2+2?" value="">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>
+                  Option A:
+                </mat-label>
+                <input formControlName="OptionA" matInput type="text" placeholder="possible answer" value="">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>
+                  Option B:
+                </mat-label>
+                <input formControlName="OptionB" matInput type="text" placeholder="possible answer" value="">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>
+                  Option C:
+                </mat-label>
+                <input formControlName="OptionC" matInput type="text" placeholder="possible answer" value="">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>
+                  Option D:
+                </mat-label>
+                <input formControlName="OptionD" matInput type="text" placeholder="possible answer" value="">
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Answer</mat-label>
+                <mat-select formControlName="answer">
+                  <mat-option *ngFor="let ans of getOptions(i)" [value]="ans">
+                    {{ans}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-divider></mat-divider>
+            </div>
+            <br>
+            <button *ngIf="getArrayControl().length === i+1" (click)="addQuestion()" mat-raised-button
+              color="accent">Add Question</button>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button (click)="onSubmit()" mat-raised-button color="primary">Submit Quiz</button>
+          <button (click)="onCancel()" mat-raised-button color="warn">Cancel</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+
+</div>

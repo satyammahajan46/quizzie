@@ -1,0 +1,23 @@
+.bottom {
+  position: relative;
+  background-color: #343a40;
+
+  color: white;
+  width: 100%;
+  min-height: 20vh;
+  align-items: center;
+  justify-content: start;
+}
+
+.padding-x-0 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.item {
+  list-style-type: none;
+}
+
+.padding {
+  padding: 2rem;
+}

@@ -1,0 +1,25 @@
+.jumbotron {
+  margin-top: 5px;
+  height: max-content;
+  display: block;
+}
+
+mat-card {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+a:hover {
+  text-decoration: none;
+  color: black;
+  background-color: white;
+}
+
+a:focus,
+a:hover {
+  outline-offset: 0;
+  outline: none;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+}
