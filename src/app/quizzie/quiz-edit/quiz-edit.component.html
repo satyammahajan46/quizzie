@@ -17,6 +17,7 @@
                   Question
                 </mat-label>
                 <input formControlName="question" matInput type="text" placeholder="What is 2+2?" value="">
+                <mat-error *ngIf="question.get('question').hasError('required')">Required Field</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -24,6 +25,7 @@
                   Option A:
                 </mat-label>
                 <input formControlName="OptionA" matInput type="text" placeholder="possible answer" value="">
+                <mat-error *ngIf="question.get('OptionA').hasError('required')">Required Field</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -31,6 +33,7 @@
                   Option B:
                 </mat-label>
                 <input formControlName="OptionB" matInput type="text" placeholder="possible answer" value="">
+                <mat-error *ngIf="question.get('OptionB').hasError('required')">Required Field</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -38,6 +41,7 @@
                   Option C:
                 </mat-label>
                 <input formControlName="OptionC" matInput type="text" placeholder="possible answer" value="">
+                <mat-error *ngIf="question.get('OptionC').hasError('required')">Required Field</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -45,6 +49,7 @@
                   Option D:
                 </mat-label>
                 <input formControlName="OptionD" matInput type="text" placeholder="possible answer" value="">
+                <mat-error *ngIf="question.get('OptionC').hasError('required')">Required Field</mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="fill">
@@ -54,6 +59,7 @@
                     {{ans}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="question.get('answer').hasError('required')">Required Field</mat-error>
               </mat-form-field>
               <mat-divider></mat-divider>
             </div>

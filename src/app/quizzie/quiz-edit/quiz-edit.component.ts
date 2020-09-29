@@ -85,7 +85,7 @@ export class QuizEditComponent implements OnInit {
     questionControl.forEach(item => {
       item.updateValueAndValidity();
     });
-
+    console.log(this.quizForm);
     if (this.quizForm.invalid) {
       return;
     }
