@@ -106,7 +106,7 @@ export class AuthEffects {
           duration: 3000,
           panelClass: ['pop-up-msg']
         });
-        // this.router.navigate(['./auth/signin']);
+        this.router.navigate(['./quizzie']);
       })
     ), { dispatch: false }
   );
