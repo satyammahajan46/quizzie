@@ -17,12 +17,10 @@ const questionSchema = new Schema({
     required: true,
   },
 
-  quizID: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Quiz",
-    },
-  ],
+  quizID: {
+    type: Schema.Types.ObjectId,
+    ref: "Quiz",
+  },
 });
 
-module.exports = mongoose.model("Question", userSchema);
+module.exports = mongoose.model("Question", questionSchema);

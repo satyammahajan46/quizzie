@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 
 const authRoutes = require("./routes/auth");
 
+const quizzieRoutes = require("./routes/quizzie");
+
 const app = express();
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
@@ -23,6 +25,8 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRoutes);
 
+app.use("/quizzie", quizzieRoutes);
+
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
@@ -33,7 +37,8 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://quizzieApp:6OmeOLA1tUmJRhfQ@quizzie.psn7y.mongodb.net/quizzie?retryWrites=true&w=majority`
+    `mongodb+srv://quizzieApp:6OmeOLA1tUmJRhfQ@quizzie.psn7y.mongodb.net/quizzie?retryWrites=true&w=majority`,
+    { useFindAndModify: false }
   )
   .then((result) => {
     console.log("Connection established with database");
