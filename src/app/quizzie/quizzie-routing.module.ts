@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OverviewComponent } from './overview/overview.component';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 const routes: Routes = [
@@ -10,11 +11,19 @@ const routes: Routes = [
     redirectTo: 'overview',
     pathMatch: 'full',
   },
-  { path: 'overview', component: OverviewComponent },
+  {
+    path: 'overview',
+    component: OverviewComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'quiz',
     children: [
-      { path: 'new', component: QuizEditComponent }
+      {
+        path: 'new',
+        component: QuizEditComponent,
+        canActivate: [AuthGuard]
+      }
     ]
   }
 ];
