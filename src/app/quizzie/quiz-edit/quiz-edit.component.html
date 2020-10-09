@@ -1,14 +1,22 @@
-<div class="row">
-  <div class="col-sm-12">
+<div class="row flex justify-content-center flex-wrap">
+  <div class="col-sm-12 text-align-center">
     <h1 *ngIf="!editMode">Create a Quiz</h1>
     <h1 *ngIf="editMode">Edit Quiz</h1>
   </div>
 
   <!-- quiz with question from -->
-  <div class="col-sm-12">
+  <div class="col-sm-6">
     <mat-card>
       <form [formGroup]="quizForm">
         <mat-card-content>
+          <h3>Quiz Name</h3>
+          <mat-form-field class="full-width">
+            <mat-label>
+              Name
+            </mat-label>
+            <input formControlName="name" matInput type="text" placeholder="Quiz Name" value="">
+            <mat-error *ngIf="quizForm.get('name').hasError('required')">Required Field</mat-error>
+          </mat-form-field>
           <div formArrayName="questions" *ngFor="let question of getArrayControl(); let i=index">
             <div [formGroupName]="i">
               <h4>Question {{i+1}}</h4>

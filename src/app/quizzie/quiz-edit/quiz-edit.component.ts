@@ -41,6 +41,7 @@ export class QuizEditComponent implements OnInit {
 
     // let question = new FormArray([]);
     this.quizForm = this.formBuilder.group({
+      name: ['', Validators.required],
       questions: this.formBuilder.array([this.createQuestion()])
 
     });
@@ -85,7 +86,7 @@ export class QuizEditComponent implements OnInit {
     questionControl.forEach(item => {
       item.updateValueAndValidity();
     });
-    console.log(this.quizForm);
+    // console.log(this.quizForm);
     if (this.quizForm.invalid) {
       return;
     }

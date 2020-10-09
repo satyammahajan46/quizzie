@@ -66,11 +66,17 @@ a:hover {
   display: flex;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .justify-content-center {
   justify-content: center;
 }
 
-
+.text-align-center {
+  text-align: center;
+}
 
 .m-0 {
   margin: 0;
