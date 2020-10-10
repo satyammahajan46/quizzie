@@ -2,13 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { Options } from 'src/app/models/quiz.model';
 
-interface Options {
-  OptionA: string;
-  OptionB: string;
-  OptionC: string;
-  OptionD: string;
-}
+
+
 
 @Component({
   selector: 'app-quiz-edit',

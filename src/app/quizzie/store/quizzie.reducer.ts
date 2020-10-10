@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as QuizzieActions from './quizzie.actions';
+import { Quiz } from '../../models/quiz.model';
 
 
 
@@ -8,12 +9,14 @@ export interface State {
   loading: boolean;
   isLoaded: boolean;
   quizzies: string[];
+  quizData: Quiz;
 }
 
 export const initialState: State = {
   loading: false,
   isLoaded: false,
-  quizzies: null
+  quizzies: null,
+  quizData: null
 };
 
 
