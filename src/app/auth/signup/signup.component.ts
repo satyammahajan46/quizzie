@@ -147,7 +147,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   }
 
-  serverValidator(errMsg: string) {
+  private serverValidator(errMsg: string) {
 
     return (control: AbstractControl): ValidationErrors => {
       return { serverError: errMsg };

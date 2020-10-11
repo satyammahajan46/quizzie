@@ -66,8 +66,6 @@ export class AuthEffects {
             return handleAuthentication(userD);
           }),
           catchError((err: Error) => {
-            console.log(err);
-
             return handleError(err);
           })
         );

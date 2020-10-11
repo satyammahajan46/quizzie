@@ -16,6 +16,7 @@
             </mat-label>
             <input formControlName="name" matInput type="text" placeholder="Quiz Name" value="">
             <mat-error *ngIf="quizForm.get('name').hasError('required')">Required Field</mat-error>
+            <mat-error *ngIf="quizForm.get('name').hasError('serverError')">{{serverErrors.nameError}}</mat-error>
           </mat-form-field>
           <div formArrayName="questions" *ngFor="let question of getArrayControl(); let i=index">
             <div [formGroupName]="i">
@@ -26,6 +27,8 @@
                 </mat-label>
                 <input formControlName="question" matInput type="text" placeholder="What is 2+2?" value="">
                 <mat-error *ngIf="question.get('question').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('question').hasError('serverError')">
+                  {{serverErrors.questions[i].question}}</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -34,6 +37,8 @@
                 </mat-label>
                 <input formControlName="OptionA" matInput type="text" placeholder="possible answer" value="">
                 <mat-error *ngIf="question.get('OptionA').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('OptionA').hasError('serverError')">
+                  {{serverErrors.questions[i].options.OptionA}}</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -42,6 +47,8 @@
                 </mat-label>
                 <input formControlName="OptionB" matInput type="text" placeholder="possible answer" value="">
                 <mat-error *ngIf="question.get('OptionB').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('OptionB').hasError('serverError')">
+                  {{serverErrors.questions[i].options.OptionB}}</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -50,6 +57,8 @@
                 </mat-label>
                 <input formControlName="OptionC" matInput type="text" placeholder="possible answer" value="">
                 <mat-error *ngIf="question.get('OptionC').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('OptionC').hasError('serverError')">
+                  {{serverErrors.questions[i].options.OptionC}}</mat-error>
               </mat-form-field>
 
               <mat-form-field class="full-width">
@@ -57,7 +66,9 @@
                   Option D:
                 </mat-label>
                 <input formControlName="OptionD" matInput type="text" placeholder="possible answer" value="">
-                <mat-error *ngIf="question.get('OptionC').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('OptionD').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('OptionD').hasError('serverError')">
+                  {{serverErrors.questions[i].options.OptionD}}</mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="fill">
@@ -68,6 +79,8 @@
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="question.get('answer').hasError('required')">Required Field</mat-error>
+                <mat-error *ngIf="question.get('answer').hasError('serverError')">
+                  {{serverErrors.questions[i].answer}}</mat-error>
               </mat-form-field>
               <mat-divider></mat-divider>
             </div>
@@ -83,5 +96,10 @@
       </form>
     </mat-card>
   </div>
+</div>
 
+<div class="backdrop" *ngIf="isLoading()">
+  <div class="spinner-box">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>

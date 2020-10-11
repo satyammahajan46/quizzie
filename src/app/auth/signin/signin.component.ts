@@ -46,7 +46,7 @@ export class SigninComponent implements OnInit, OnDestroy {
         password: this.signInform.value.password
       })
     );
-    //console.log(JSON.stringify(this.signInform.value));
+    // console.log(JSON.stringify(this.signInform.value));
   }
 
 

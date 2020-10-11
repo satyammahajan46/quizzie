@@ -9,7 +9,7 @@ export class Quiz {
 
 export interface Question {
   question: string;
-  options: Options[];
+  options: Options;
   answer: string;
 }
 
@@ -18,4 +18,9 @@ export interface Options {
   OptionB: string;
   OptionC: string;
   OptionD: string;
+}
+
+export interface QuizError {
+  nameError: string;
+  questions: Question[];
 }
