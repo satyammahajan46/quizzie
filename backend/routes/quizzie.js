@@ -12,7 +12,7 @@ router.get("/quizzies", quizzieController.getQuizzies);
 // POST /quizzie/createQuiz
 router.post(
   "/createquiz",
-
+  isAuth,
   [
     body("name").notEmpty().withMessage("Required Field"),
     body("questions")
@@ -57,11 +57,11 @@ router.post(
   quizzieController.createQuiz
 );
 
-router.get("/quiz/:quizID", quizzieController.getQuiz);
+router.get("/quiz/:quizID", isAuth,quizzieController.getQuiz);
 
 router.put(
   "/quiz/:quizID",
-
+  isAuth,
   [
     body("name").notEmpty().withMessage("Required Field"),
     body("questions")
@@ -106,6 +106,6 @@ router.put(
   quizzieController.updateQuiz
 );
 
-router.delete("/quiz/:quizID", quizzieController.deleteQuiz);
+router.delete("/quiz/:quizID", isAuth, quizzieController.deleteQuiz);
 
 module.exports = router;

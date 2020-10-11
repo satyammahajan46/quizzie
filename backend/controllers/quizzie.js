@@ -8,12 +8,13 @@ const Question = require("../models/question");
 
 const mongoose = require("mongoose");
 
-const user = "5f66d5accf8c501168e31ebd";
+
 
 exports.getQuizzies = async (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = req.query.pp || 5;
   try {
+    const user = req.userId;
     const totalQuiz = await Quiz.find({ userID: user }).countDocuments();
 
     const quizzies = await Quiz.find({ userID: user })
@@ -54,6 +55,7 @@ exports.createQuiz = async (req, res, next) => {
   }
   try {
     const questions = req.body.questions;
+    const user = req.userId;
     // console.log(questions);
     const name = req.body.name;
     const quiz = await Quiz.create({
@@ -92,9 +94,10 @@ exports.createQuiz = async (req, res, next) => {
 };
 
 exports.getQuiz = async (req, res, next) => {
-  const quizID = req.params.quizID;
 
   try {
+    const quizID = req.params.quizID;
+    const user = req.userId;
     const quiz = await Quiz.findOne({
       $and: [{ _id: quizID }, { userID: user }],
     }).populate("questions");
@@ -131,6 +134,7 @@ exports.updateQuiz = async (req, res, next) => {
 
   try {
     const quizID = req.params.quizID;
+    const user = req.userId;
     const name = req.body.name;
     const questions = req.body.questions;
     const quiz = await Quiz.findOne({
@@ -197,7 +201,8 @@ exports.updateQuiz = async (req, res, next) => {
 exports.deleteQuiz = async (req, res, next) => {
   try {
     const quizID = req.params.quizID;
-    const quiz = Quiz.findOne({ $and: [{ _id: quizID }, { userID: user }] });
+    const user = req.userId;
+    const quiz = await Quiz.findOne({ $and: [{ _id: quizID }, { userID: user }] });
     if (!quiz) {
       const error = new Error("No quiz found");
       error.statusCode = 404;
@@ -208,7 +213,11 @@ exports.deleteQuiz = async (req, res, next) => {
     for (const value of questionsID) {
       await Question.findByIdAndDelete(value._id);
     }
+
     let result = (await quiz).deleteOne();
+
+    result = await User.findById(user).quiz.pull(quizID);
+
     if (result) {
       res.status(200).json({
         message: "quiz deleted",
