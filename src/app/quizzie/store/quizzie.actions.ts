@@ -16,7 +16,7 @@ export const ERROR = '[Quizzie Page] error';
 export const loadQuizzies = createAction(LOADQUIZZIES);
 
 export const loadQuizziesComplete = createAction(
-  LOADQUIZZIESCOMPLETE, props<{ quizzies: string[] }>()
+  LOADQUIZZIESCOMPLETE, props<{ quizzies: Quiz[], totalItems: number }>()
 );
 
 export const createQuiz = createAction(
@@ -35,6 +35,6 @@ export const cEQuizError = createAction(
 );
 
 export const error = createAction(
-  ERROR, props<{ error: string }>()
+  ERROR
 );
 

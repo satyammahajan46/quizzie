@@ -58,7 +58,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.quizForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       questions: this.formBuilder.array([this.createQuestion()])
-
     });
 
     this.storeSub = this.store.select('quizzie').subscribe((quizState) => {
@@ -221,7 +220,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     }
 
     this.quizForm.disable({ emitEvent: false });
-    const quiz = new Quiz(this.quizForm.value.name, this.quizForm.value.questions);
+    const quiz = new Quiz(null, this.quizForm.value.name, this.quizForm.value.questions);
     this.store.dispatch(
       QuizzieActions.createQuiz({ quiz })
     );

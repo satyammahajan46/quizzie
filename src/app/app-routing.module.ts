@@ -4,7 +4,7 @@ import { MainpageComponent } from './mainpage/mainpage.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: MainpageComponent },
+  { path: 'home', component: MainpageComponent, data: { animation: 'HomePage' } },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)

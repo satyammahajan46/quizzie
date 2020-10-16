@@ -10,7 +10,7 @@ import { Observable, EMPTY, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as QuizActions from '../store/quizzie.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import { Question, QuizError, Options } from '../../models/quiz.model';
+import { Question, QuizError, Options, Quiz } from '../../models/quiz.model';
 
 const parseError = (quizError: QuizError, errorData) => {
   const questionErr = errorData;
@@ -46,7 +46,7 @@ const parseError = (quizError: QuizError, errorData) => {
     quesErr.options = optErr;
     quizError.questions.push(quesErr);
   }
-}
+};
 
 const handleError = (errorRes: any) => {
   let errorMessage = 'An unknown error occurred!';
@@ -111,6 +111,62 @@ export class QuizzieEffects {
     ) // action pipe ending
   );
 
+
+  loadQuizzies$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.loadQuizzies),
+      mergeMap((action) => {
+
+        return this.http.get<{
+          message: string,
+          quizzies: any,
+          totalItems: number
+        }>(environment.backEndURL + '/quizzie/quizzies')
+          .pipe(
+            map(resData => {
+              // this.snackBar.open('Quiz Created Succesfully. Redirecting back to dashboard!', '', {
+              //   duration: 3000,
+              //   panelClass: ['pop-up-msg']
+              // });
+              console.log(resData);
+              const quizzies = resData.quizzies;
+              const parsedData: Quiz[] = Array();
+              for (const quiz of quizzies) {
+                const data = quiz.questions[0];
+                const question: Question = {
+                  question: data.question,
+                  id: data._id,
+                  options: {
+                    OptionA: data.options[0],
+                    OptionB: data.options[1],
+                    OptionC: data.options[2],
+                    OptionD: data.options[3]
+                  }
+                };
+
+                parsedData.push(
+                  new Quiz(quiz._id, quiz.name, [question])
+                );
+              }
+              return QuizActions.loadQuizziesComplete({ quizzies: parsedData, totalItems: +resData.totalItems });
+            }),
+            catchError((err: Error) => {
+
+              let msg = 'An unknown error occured!';
+              if (err.message) {
+                msg = err.message;
+              }
+              this.snackBar.open(msg, '', {
+                duration: 3000,
+                panelClass: ['danger-pop-up-msg']
+              });
+              return of(QuizActions.error());
+            })
+          );
+      })
+    ) // action pipe ending
+  );
+
   // IMPLEMENT IF REQUIRED TO NAVIGATE
   // cEQuizComplete$: Observable<Action> = createEffect(() =>
   //   this.actions$.pipe(
@@ -124,16 +180,4 @@ export class QuizzieEffects {
 }
 
 
-//   mergeMap((action) => {
-// console.log(action);
 
-// return this.http.post(environment.backEndURL, {
-//   name: action.quiz.name,
-//   questions: action.quiz.questions
-// }).pipe(
-//   map(resData => {
-//     console.log(resData);
-//     return of(EMPTY);
-//   })
-// );
-//       })

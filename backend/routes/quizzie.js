@@ -7,7 +7,7 @@ const isAuth = require("../middleware/is-auth");
 const router = express.Router();
 
 // GET /quiziie/quizzies
-router.get("/quizzies", quizzieController.getQuizzies);
+router.get("/quizzies", isAuth, quizzieController.getQuizzies);
 
 // POST /quizzie/createQuiz
 router.post(
@@ -57,7 +57,7 @@ router.post(
   quizzieController.createQuiz
 );
 
-router.get("/quiz/:quizID", isAuth,quizzieController.getQuiz);
+router.get("/quiz/:quizID", isAuth, quizzieController.getQuiz);
 
 router.put(
   "/quiz/:quizID",

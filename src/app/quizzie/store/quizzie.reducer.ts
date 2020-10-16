@@ -8,7 +8,8 @@ import { Quiz, QuizError } from '../../models/quiz.model';
 export interface State {
   loading: boolean;
   isLoaded: boolean;
-  quizzies: string[];
+  quizzies: Quiz[];
+  totalQuiz: number;
   quizData: Quiz;
   cEditError: QuizError;
 }
@@ -18,7 +19,8 @@ export const initialState: State = {
   isLoaded: false,
   quizzies: null,
   quizData: null,
-  cEditError: null
+  cEditError: null,
+  totalQuiz: 0
 };
 
 
@@ -41,6 +43,19 @@ const quizzieReducer = createReducer(
     isLoaded: true,
     cEditError: error
   })),
+  on(QuizzieActions.loadQuizziesComplete, (state, { quizzies, totalItems }) => ({
+    ...state,
+    loading: false,
+    isLoaded: true,
+    quizzies,
+    totalQuiz: totalItems
+  })),
+  on(QuizzieActions.error, state => ({
+    ...state,
+    loading: false,
+    isLoaded: true
+  })),
+
 
 
 

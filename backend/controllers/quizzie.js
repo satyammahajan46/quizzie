@@ -8,20 +8,24 @@ const Question = require("../models/question");
 
 const mongoose = require("mongoose");
 
-
-
 exports.getQuizzies = async (req, res, next) => {
   const currentPage = req.query.page || 1;
   const perPage = req.query.pp || 5;
+  const questions = req.query.q || 0;
   try {
     const user = req.userId;
     const totalQuiz = await Quiz.find({ userID: user }).countDocuments();
-
-    const quizzies = await Quiz.find({ userID: user })
-      .skip((currentPage - 1) * perPage)
-      .limit(perPage)
-      .populate("questions");
-
+    let quizzies;
+    if (questions) {
+      quizzies = await Quiz.find({ userID: user })
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    } else {
+      quizzies = await Quiz.find({ userID: user })
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage)
+        .populate({ path: "questions", options: { limit: 1 } });
+    }
     if (!quizzies.length) {
       const error = new Error("No quizzies found!");
       error.statusCode = 404;
@@ -94,7 +98,6 @@ exports.createQuiz = async (req, res, next) => {
 };
 
 exports.getQuiz = async (req, res, next) => {
-
   try {
     const quizID = req.params.quizID;
     const user = req.userId;
@@ -202,7 +205,9 @@ exports.deleteQuiz = async (req, res, next) => {
   try {
     const quizID = req.params.quizID;
     const user = req.userId;
-    const quiz = await Quiz.findOne({ $and: [{ _id: quizID }, { userID: user }] });
+    const quiz = await Quiz.findOne({
+      $and: [{ _id: quizID }, { userID: user }],
+    });
     if (!quiz) {
       const error = new Error("No quiz found");
       error.statusCode = 404;

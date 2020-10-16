@@ -1,5 +1,6 @@
 export class Quiz {
   constructor(
+    public id: string,
     public name: string,
     public questions: Question[]
   ) { }
@@ -8,9 +9,10 @@ export class Quiz {
 }
 
 export interface Question {
+  id?: string;
   question: string;
   options: Options;
-  answer: string;
+  answer?: string;
 }
 
 export interface Options {

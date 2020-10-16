@@ -10,7 +10,6 @@ export class User {
 
   public getToken() {
     const isInvalid = new Date(Date.now()).getTime() > new Date(this._tokenExpirationDate).getTime();
-
     if (!this._tokenExpirationDate || isInvalid) {
       return null;
     }

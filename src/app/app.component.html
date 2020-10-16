@@ -5,12 +5,12 @@
       <app-main-header></app-main-header>
     </div>
   </header>
-  <main class="row">
-    <div class="col-md-12">
-      <router-outlet></router-outlet>
+  <main class="row" style="min-height: 70vh">
+    <div class="col-md-12" [@routeAnimations]="prepareRoute(outlet)">
+      <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </main>
-  <div class="row">
+  <div class="row" style="min-height: 25vh">
     <div class="col-md-12 p-0">
       <app-footer></app-footer>
     </div>
