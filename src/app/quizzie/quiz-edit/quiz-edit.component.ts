@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { Options } from 'src/app/models/quiz.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../appStore/app.reducer';
@@ -28,7 +28,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
   options: Options[];
   serverErrors: QuizError;
   private storeSub: Subscription;
-
+  private quiz: Quiz;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +38,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     private changeDetRef: ChangeDetectorRef,
     private snackBar: MatSnackBar
   ) {
+    this.quiz = null;
   }
   ngOnDestroy(): void {
     if (this.storeSub) {
@@ -52,30 +53,70 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       this.id = params.id;
       this.editMode = params.id != null;
       // intialize the form for editing
-      // this.initForm();
+      console.log(this.editMode);
+      this.storeSub = this.store.select('quizzie').subscribe((quizState) => {
+
+        this.isLoadingResult = quizState.loading;
+        if (quizState.cEditError) {
+          this.serverErrors = quizState.cEditError;
+        }
+        if (this.quizForm && quizState.isLoaded) {
+          this.quizForm.enable({ emitEvent: false });
+          this.parseServerError();
+          this.quizForm.updateValueAndValidity();
+        }
+        if (this.editMode) {
+          this.quiz = quizState.quizData;
+        }
+        this.initForm();
+        this.changeDetRef.detectChanges();
+      });
     });
 
-    this.quizForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      questions: this.formBuilder.array([this.createQuestion()])
-    });
 
-    this.storeSub = this.store.select('quizzie').subscribe((quizState) => {
+  }
+  initForm() {
+    let quizname = '';
+    const questions = new Array();
+    if (this.editMode) {
+      console.log(this.quiz);
 
-      this.isLoadingResult = quizState.loading;
-      if (quizState.cEditError) {
-        this.serverErrors = quizState.cEditError;
-      }
-      if (quizState.isLoaded) {
-        this.quizForm.enable({ emitEvent: false });
-        this.parseServerError();
-        this.quizForm.updateValueAndValidity();
-      }
-      this.changeDetRef.detectChanges();
-    });
+      quizname = this.quiz.name;
 
+      this.quiz.questions.forEach((ele) => {
+        questions.push(this.createQuestionInfo(
+          ele.question,
+          ele.answer,
+          ele.options.OptionA,
+          ele.options.OptionB,
+          ele.options.OptionC,
+          ele.options.OptionD
+        ));
+      });
+
+      // this.quizForm = this.formBuilder.group({
+      //   name: [this.quiz.name, [Validators.required]],
+      //   questions: this.formBuilder.array([...questions]),
+      // });
+      this.options = new Array<Options>();
+      this.setAllOptionsList();
+
+    }
+    if (!questions.length) {
+      this.quizForm = this.formBuilder.group({
+        name: [quizname, [Validators.required]],
+        questions: this.formBuilder.array([this.createQuestion()])
+      });
+
+    } else {
+      this.quizForm = this.formBuilder.group({
+        name: [quizname, [Validators.required]],
+        questions: this.formBuilder.array(questions)
+      });
+    }
     this.options = new Array<Options>();
     this.setAllOptionsList();
+
 
     this.quizForm.get('name').valueChanges.subscribe((val) => {
       const name = this.quizForm.get('name');
@@ -85,6 +126,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     });
 
     this.getArrayControl().forEach((element) => {
+      element.get('answer').setValue(element.get('answer').value);
       element.get('question').valueChanges.subscribe(val => {
         const ques = element.get('question');
         if (val && ques.hasError('serverError')) {
@@ -187,7 +229,21 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  createQuestionInfo(ques, ans, oA, oB, oC, oD): FormGroup {
+    return this.formBuilder.group({
+      question: [ques, [Validators.required]],
+      answer: [ans, [Validators.required]],
+      OptionA: [oA, [Validators.required]],
+      OptionB: [oB, [Validators.required]],
+      OptionC: [oC, [Validators.required]],
+      OptionD: [oD, [Validators.required]]
+    });
+  }
+
   getArrayControl() {
+    if (!this.quizForm) {
+      return [];
+    }
     return (this.quizForm.get('questions') as FormArray).controls;
   }
 

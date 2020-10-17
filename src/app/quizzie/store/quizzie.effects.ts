@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserData, User } from '../../models/user.model';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { Observable, EMPTY, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as QuizActions from '../store/quizzie.actions';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { Question, QuizError, Options, Quiz } from '../../models/quiz.model';
 
 const parseError = (quizError: QuizError, errorData) => {
@@ -116,20 +116,22 @@ export class QuizzieEffects {
     this.actions$.pipe(
       ofType(QuizActions.loadQuizzies),
       mergeMap((action) => {
-
+        const param = new HttpParams()
+          .set('page', action.pageNumber.toString())
+          .set('pp', action.items.toString());
         return this.http.get<{
           message: string,
           quizzies: any,
           totalItems: number
-        }>(environment.backEndURL + '/quizzie/quizzies')
+        }>(environment.backEndURL + '/quizzie/quizzies', { params: param })
           .pipe(
             map(resData => {
               // this.snackBar.open('Quiz Created Succesfully. Redirecting back to dashboard!', '', {
               //   duration: 3000,
               //   panelClass: ['pop-up-msg']
               // });
-              console.log(resData);
               const quizzies = resData.quizzies;
+              console.log(quizzies)
               const parsedData: Quiz[] = Array();
               for (const quiz of quizzies) {
                 const data = quiz.questions[0];
@@ -151,6 +153,58 @@ export class QuizzieEffects {
               return QuizActions.loadQuizziesComplete({ quizzies: parsedData, totalItems: +resData.totalItems });
             }),
             catchError((err: Error) => {
+              console.log(err);
+              let msg = 'An unknown error occured!';
+              if (err.message) {
+                msg = err.message;
+              }
+              this.snackBar.open(msg, '', {
+                duration: 3000,
+                panelClass: ['danger-pop-up-msg']
+              });
+              return of(QuizActions.error({ error: msg }));
+            })
+          );
+      })
+    ) // action pipe ending
+  );
+
+
+  loadQuiz$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.loadQuiz),
+      mergeMap((action) => {
+        return this.http.get<{
+          message: string,
+          quiz: any,
+        }>(environment.backEndURL + '/quizzie/quiz/' + action.id)
+          .pipe(
+            map(resData => {
+              const quiz = resData.quiz;
+              const parsedData: Quiz = {
+                name: quiz.name,
+                id: quiz._id,
+                questions: null
+              };
+              const questions: Question[] = Array();
+              quiz.questions.forEach(element => {
+                const ques: Question = {
+                  question: element.question,
+                  options: {
+                    OptionA: element.options[0],
+                    OptionB: element.options[1],
+                    OptionC: element.options[2],
+                    OptionD: element.options[3]
+                  },
+                  id: element._id,
+                  answer: element.answer
+                };
+                questions.push(ques);
+              });
+              parsedData.questions = questions;
+              return QuizActions.loadQuizComplete({ quiz: parsedData });
+            }),
+            catchError((err: Error) => {
 
               let msg = 'An unknown error occured!';
               if (err.message) {
@@ -160,20 +214,33 @@ export class QuizzieEffects {
                 duration: 3000,
                 panelClass: ['danger-pop-up-msg']
               });
-              return of(QuizActions.error());
+              return of(QuizActions.error({ error: msg }));
             })
           );
       })
     ) // action pipe ending
   );
 
-  // IMPLEMENT IF REQUIRED TO NAVIGATE
+  genericError$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.error),
+      tap((action) => {
+        this.snackBar.open(action.error, '', {
+          duration: 3000,
+          panelClass: ['danger-pop-up-msg']
+        });
+      })
+    ), { dispatch: false }
+  );
+
+  // IMPLEMENT IF REQUIRED TO NAVIGATE & reload quizzies
   // cEQuizComplete$: Observable<Action> = createEffect(() =>
   //   this.actions$.pipe(
   //     ofType(QuizActions.cEQuizComplete),
   //     map()
   //   )
   // );
+
   constructor(
     private actions$: Actions, private http: HttpClient, private router: Router, private snackBar: MatSnackBar
   ) { }

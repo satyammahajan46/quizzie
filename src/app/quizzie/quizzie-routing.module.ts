@@ -5,6 +5,7 @@ import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { ViewQuizziesComponent } from './view-quizzies/view-quizzies.component';
 import { LoadQuizzies } from './load-quizzies.resolve';
+import { LoadQuiz } from './load-quiz';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'new',
         component: QuizEditComponent,
+      }, {
+        path: 'edit/:id',
+        component: QuizEditComponent,
+        resolve: { quiz: LoadQuiz }
       },
       {
         path: 'view',

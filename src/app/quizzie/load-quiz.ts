@@ -9,7 +9,7 @@ import * as QuizzieActions from './store/quizzie.actions';
 @Injectable({
   providedIn: 'root'
 })
-export class LoadQuizzies {
+export class LoadQuiz {
 
   constructor(
     private store: Store<AppState>,
@@ -20,17 +20,17 @@ export class LoadQuizzies {
     return this.store.select('quizzie').pipe(
       take(1),
       map(quizState => {
-        return quizState.quizzies;
+        return quizState.quizData;
       }),
-      mergeMap(quizzies => {
-        if (!quizzies || quizzies.length === 0) {
-          this.store.dispatch(QuizzieActions.loadQuizzies({ pageNumber: 1, items: 5 }));
+      mergeMap(quiz => {
+        if (!quiz) {
+          this.store.dispatch(QuizzieActions.loadQuiz({ id: route.paramMap.get('id') }));
           return this.actions$.pipe(
-            ofType(QuizzieActions.loadQuizziesComplete),
+            ofType(QuizzieActions.loadQuizComplete),
             take(1)
           );
         } else {
-          return of(quizzies);
+          return of(quiz);
         }
       })
     );

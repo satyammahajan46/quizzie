@@ -1,3 +1,60 @@
-<p>
-  view-quizzies works!
-</p>
+<div class="row">
+  <mat-accordion>
+    <div class="col-sm-12 p-2" *ngFor="let quiz of quizzies; let i=index">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{quiz.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{
+              (quiz.questions[0].question.length>10)
+              ?
+              (quiz.questions[0].question | slice:0:10)+'...'
+              :
+              (quiz.questions[0].question)
+            }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>{{quiz.questions[0].question}}</h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <mat-radio-group aria-label="Select an option">
+            <div class="col-sm-12">
+              <mat-radio-button value="quiz.questions[0].options.OptionA">{{quiz.questions[0].options.OptionA}}
+              </mat-radio-button>
+              <mat-radio-button value="quiz.questions[0].options.OptionB">{{quiz.questions[0].options.OptionB}}
+              </mat-radio-button>
+            </div>
+            <div class="col-sm-12">
+              <mat-radio-button value="quiz.questions[0].options.OptionC">{{quiz.questions[0].options.OptionC}}
+              </mat-radio-button>
+              <mat-radio-button value="quiz.questions[0].options.OptionD">{{quiz.questions[0].options.OptionD}}
+              </mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 p-1">
+            <button mat-flat-button color="primary" [routerLink]='["../edit",quiz.id]'>Edit Quiz</button>&nbsp;
+            <button mat-flat-button color="accent" value="quiz.id">View Quiz</button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+    </div>
+  </mat-accordion>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 position-absolute b-0">
+    <mat-paginator [length]="getTotalQuiz()" [pageSize]="5" [pageSizeOptions]="[5]"
+      (page)="pageEvent = updateQuizzies($event)">
+    </mat-paginator>
+  </div>
+</div>

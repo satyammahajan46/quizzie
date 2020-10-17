@@ -5,8 +5,8 @@
       <app-main-header></app-main-header>
     </div>
   </header>
-  <main class="row" style="min-height: 70vh">
-    <div class="col-md-12" [@routeAnimations]="prepareRoute(outlet)">
+  <main class="row m-0" style="min-height: 70vh">
+    <div class="col-md-12 min-height-inherit" [@routeAnimations]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </main>

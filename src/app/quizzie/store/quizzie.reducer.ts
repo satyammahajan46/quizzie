@@ -27,6 +27,7 @@ export const initialState: State = {
 const quizzieReducer = createReducer(
   initialState,
   on(QuizzieActions.loadQuizzies, state => ({ ...state, loading: true, isLoaded: false })),
+  on(QuizzieActions.loadQuiz, state => ({ ...state, loading: true, isLoaded: false })),
   on(QuizzieActions.createQuiz, state => ({
     ...state,
     loading: true,
@@ -55,6 +56,12 @@ const quizzieReducer = createReducer(
     loading: false,
     isLoaded: true
   })),
+  on(QuizzieActions.loadQuizComplete, (state, { quiz }) => ({
+    ...state,
+    loading: false,
+    isLoaded: true,
+    quizData: quiz,
+  }))
 
 
 

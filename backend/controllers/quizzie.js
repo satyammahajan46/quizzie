@@ -9,9 +9,9 @@ const Question = require("../models/question");
 const mongoose = require("mongoose");
 
 exports.getQuizzies = async (req, res, next) => {
-  const currentPage = req.query.page || 1;
-  const perPage = req.query.pp || 5;
-  const questions = req.query.q || 0;
+  const currentPage = +req.query.page || 1;
+  const perPage = +req.query.pp || 5;
+  const questions = +req.query.q || 0;
   try {
     const user = req.userId;
     const totalQuiz = await Quiz.find({ userID: user }).countDocuments();

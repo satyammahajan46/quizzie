@@ -15,8 +15,9 @@
               Name
             </mat-label>
             <input formControlName="name" matInput type="text" placeholder="Quiz Name" value="">
-            <mat-error *ngIf="quizForm.get('name').hasError('required')">Required Field</mat-error>
-            <mat-error *ngIf="quizForm.get('name').hasError('serverError')">{{serverErrors.nameError}}</mat-error>
+            <mat-error *ngIf="quizForm && quizForm.get('name').hasError('required')">Required Field</mat-error>
+            <mat-error *ngIf="quizForm && quizForm.get('name').hasError('serverError')">{{serverErrors.nameError}}
+            </mat-error>
           </mat-form-field>
           <div formArrayName="questions" *ngFor="let question of getArrayControl(); let i=index">
             <div [formGroupName]="i">

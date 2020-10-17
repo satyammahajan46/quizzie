@@ -102,6 +102,10 @@ a:hover {
   justify-content: center;
 }
 
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
 .text-align-center {
   text-align: center;
 }
@@ -122,10 +126,18 @@ a:hover {
   margin-left: 0;
 }
 
+.ml-2 {
+  margin-left: 2rem;
+}
+
 
 
 .mr-0 {
   margin-right: 0;
+}
+
+.mr-2 {
+  margin-right: 2rem;
 }
 
 .mt-2 {
@@ -151,4 +163,17 @@ a:hover {
 
 .background-img {
   background-image: url('./assets/images/background.jpg');
+}
+
+
+.min-height-inherit {
+  min-height: inherit;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.b-0 {
+  bottom: 0;
 }
