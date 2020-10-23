@@ -5,7 +5,7 @@ import { map, take, tap } from 'rxjs/operators';
 import { Options } from 'src/app/models/quiz.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../appStore/app.reducer';
-import * as QuizzieActions from '../store/quizzie.actions'
+import * as QuizzieActions from '../store/quizzie.actions';
 import { Quiz, QuizError } from '../../models/quiz.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
@@ -52,8 +52,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.id = params.id;
       this.editMode = params.id != null;
-      // intialize the form for editing
-      console.log(this.editMode);
+      // intialize the form for editin
       this.storeSub = this.store.select('quizzie').subscribe((quizState) => {
 
         this.isLoadingResult = quizState.loading;
@@ -79,8 +78,6 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     let quizname = '';
     const questions = new Array();
     if (this.editMode) {
-      console.log(this.quiz);
-
       quizname = this.quiz.name;
 
       this.quiz.questions.forEach((ele) => {
@@ -276,15 +273,32 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     }
 
     this.quizForm.disable({ emitEvent: false });
-    const quiz = new Quiz(null, this.quizForm.value.name, this.quizForm.value.questions);
-    this.store.dispatch(
-      QuizzieActions.createQuiz({ quiz })
-    );
+    if (this.editMode) {
+      const quiz = new Quiz(this.quiz.id, this.quizForm.value.name, this.quizForm.value.questions);
+      quiz.questions.forEach((ques, index) => {
+        if (this.quiz.questions[index] && this.quiz.questions[index].id) {
+          ques.id = this.quiz.questions[index].id;
+        }
+      });
+      console.log(quiz);
+      this.store.dispatch(
+        QuizzieActions.editQuiz({ quiz })
+      );
+    } else {
+      const quiz = new Quiz(null, this.quizForm.value.name, this.quizForm.value.questions);
+      this.store.dispatch(
+        QuizzieActions.createQuiz({ quiz })
+      );
+    }
   }
 
   onCancel() {
     this.quizForm.reset();
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    if (this.editMode) {
+      this.router.navigate(['../../../'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    }
   }
 
   getOptions(index): string[] {

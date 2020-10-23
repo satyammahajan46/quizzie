@@ -14,6 +14,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { EffectsModule } from '@ngrx/effects';
 import { QuizzieEffects } from './store/quizzie.effects';
 import { ViewQuizziesComponent } from './view-quizzies/view-quizzies.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -36,6 +37,7 @@ import { ViewQuizziesComponent } from './view-quizzies/view-quizzies.component';
     MatExpansionModule,
     MatRadioModule,
     MatPaginatorModule,
+    MatIconModule,
     EffectsModule.forFeature([QuizzieEffects])
   ]
 })

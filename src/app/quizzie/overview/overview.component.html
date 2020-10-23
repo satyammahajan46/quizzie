@@ -9,12 +9,22 @@
         <mat-card-title>
           Recent Quizzies
         </mat-card-title>
+        <mat-divider></mat-divider>
         <mat-card-content>
-          <mat-list>
-            <mat-list-item> Pepper </mat-list-item>
-            <mat-list-item> Salt </mat-list-item>
-            <mat-list-item> Paprika </mat-list-item>
+          <mat-list *ngIf="!isLoaded;else elseC">
+            <mat-list-item>
+              No Quiz's available
+            </mat-list-item>
           </mat-list>
+          <ng-template #elseC>
+            <mat-list *ngFor="let quiz of quizzies; let i=index">
+              <mat-list-item>
+                <button mat-button (click)="onQuizSelect(i)" [color]="!isQuizSelected(quiz.name)?'accent':'primary'">
+                  {{quiz.name}} </button>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </mat-list>
+          </ng-template>
         </mat-card-content>
       </mat-card>
     </div>
@@ -25,12 +35,36 @@
         <mat-card-title>
           Questions
         </mat-card-title>
+        <mat-divider></mat-divider>
         <mat-card-content>
 
           <!-- list of questions -->
-          <mat-list>
+          <mat-list *ngIf="!questions;else questionsC">
             <mat-list-item> Please select a quiz </mat-list-item>
           </mat-list>
+          <ng-template #questionsC>
+            <mat-list *ngFor="let ques of questions; let i=index">
+              <mat-list-item>
+                {{
+                   (ques.question.length>10)
+                   ?
+                   (ques.question | slice:0:10)+'...'
+                   :
+                   (ques.question)
+                }}
+                <span class="example-spacer"></span>
+                <button mat-icon-button>
+                  <span>&nbsp;</span>
+                  <mat-icon color="accent">edit</mat-icon>
+                </button>
+                <button mat-icon-button>
+                  <span>&nbsp;</span>
+                  <mat-icon color="warn">delete</mat-icon>
+                </button>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </mat-list>
+          </ng-template>
         </mat-card-content>
       </mat-card>
     </div>
@@ -43,11 +77,11 @@
         <mat-card-title>
           Quiz Statistics
         </mat-card-title>
+        <mat-divider></mat-divider>
         <mat-card-content>
           <mat-list>
-            <mat-list-item> Pepper </mat-list-item>
-            <mat-list-item> Salt </mat-list-item>
-            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Under Progress... </mat-list-item>
+            
           </mat-list>
         </mat-card-content>
       </mat-card>

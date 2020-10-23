@@ -61,9 +61,12 @@ const quizzieReducer = createReducer(
     loading: false,
     isLoaded: true,
     quizData: quiz,
-  }))
-
-
+  })),
+  on(QuizzieActions.editQuiz, state => ({
+    ...state,
+    loading: true,
+    isLoaded: false
+  })),
 
 
 );

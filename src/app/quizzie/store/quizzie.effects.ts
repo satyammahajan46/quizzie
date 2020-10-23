@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { Observable, EMPTY, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import * as QuizActions from '../store/quizzie.actions';
-import { mergeMap, map, catchError, tap } from 'rxjs/operators';
+import { mergeMap, map, catchError, tap, take } from 'rxjs/operators';
 import { Question, QuizError, Options, Quiz } from '../../models/quiz.model';
 
 const parseError = (quizError: QuizError, errorData) => {
@@ -111,6 +111,32 @@ export class QuizzieEffects {
     ) // action pipe ending
   );
 
+  editQuizStart$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.editQuiz),
+      mergeMap((action) => {
+
+        return this.http.put(environment.backEndURL + '/quizzie/quiz/' + action.quiz.id, {
+          name: action.quiz.name,
+          questions: action.quiz.questions
+        })
+          .pipe(
+            map(resData => {
+              this.snackBar.open('Quiz Edited Succesfully. Redirecting back to dashboard!', '', {
+                duration: 3000,
+                panelClass: ['pop-up-msg']
+              });
+              return QuizActions.cEQuizComplete();
+            }),
+            catchError((err: Error) => {
+              console.log(err);
+              return handleError(err);
+            })
+          );
+      })
+    ) // action pipe ending
+  );
+
 
   loadQuizzies$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
@@ -131,7 +157,6 @@ export class QuizzieEffects {
               //   panelClass: ['pop-up-msg']
               // });
               const quizzies = resData.quizzies;
-              console.log(quizzies)
               const parsedData: Quiz[] = Array();
               for (const quiz of quizzies) {
                 const data = quiz.questions[0];
@@ -152,11 +177,13 @@ export class QuizzieEffects {
               }
               return QuizActions.loadQuizziesComplete({ quizzies: parsedData, totalItems: +resData.totalItems });
             }),
-            catchError((err: Error) => {
-              console.log(err);
+            catchError((err: any) => {
               let msg = 'An unknown error occured!';
               if (err.message) {
                 msg = err.message;
+              }
+              if (err.error && err.error.message) {
+                msg = err.error.message;
               }
               this.snackBar.open(msg, '', {
                 duration: 3000,
@@ -234,12 +261,15 @@ export class QuizzieEffects {
   );
 
   // IMPLEMENT IF REQUIRED TO NAVIGATE & reload quizzies
-  // cEQuizComplete$: Observable<Action> = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(QuizActions.cEQuizComplete),
-  //     map()
-  //   )
-  // );
+  cEQuizComplete$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.cEQuizComplete),
+      map(action => {
+        this.router.navigate(['quizzie']);
+        return QuizActions.loadQuizzies({ pageNumber: 1, items: 5 });
+      })
+    )
+  );
 
   constructor(
     private actions$: Actions, private http: HttpClient, private router: Router, private snackBar: MatSnackBar

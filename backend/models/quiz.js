@@ -3,23 +3,26 @@ const mongoose = require("mongoose");
 const { stringify } = require("querystring");
 const Schema = mongoose.Schema;
 
-const quizSchema = new Schema({
-  userID: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  questions: [
-    {
+const quizSchema = new Schema(
+  {
+    userID: {
       type: Schema.Types.ObjectId,
-      ref: "Question",
+      ref: "User",
       required: true,
     },
-  ],
-});
+    name: {
+      type: String,
+      required: true,
+    },
+    questions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Question",
+        required: true,
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Quiz", quizSchema);

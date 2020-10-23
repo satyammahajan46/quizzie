@@ -23,15 +23,11 @@ export class LoadQuiz {
         return quizState.quizData;
       }),
       mergeMap(quiz => {
-        if (!quiz) {
-          this.store.dispatch(QuizzieActions.loadQuiz({ id: route.paramMap.get('id') }));
-          return this.actions$.pipe(
-            ofType(QuizzieActions.loadQuizComplete),
-            take(1)
-          );
-        } else {
-          return of(quiz);
-        }
+        this.store.dispatch(QuizzieActions.loadQuiz({ id: route.paramMap.get('id') }));
+        return this.actions$.pipe(
+          ofType(QuizzieActions.loadQuizComplete),
+          take(1)
+        );
       })
     );
   }

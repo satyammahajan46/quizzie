@@ -19,12 +19,15 @@ exports.getQuizzies = async (req, res, next) => {
     if (questions) {
       quizzies = await Quiz.find({ userID: user })
         .skip((currentPage - 1) * perPage)
-        .limit(perPage);
+        .limit(perPage)
+        .sort("-updatedAt");
     } else {
       quizzies = await Quiz.find({ userID: user })
         .skip((currentPage - 1) * perPage)
         .limit(perPage)
-        .populate({ path: "questions", options: { limit: 1 } });
+        .sort("-updatedAt")
+        .populate({ path: "questions", perDocumentLimit: 1 });
+      //.populate("questions");
     }
     if (!quizzies.length) {
       const error = new Error("No quizzies found!");

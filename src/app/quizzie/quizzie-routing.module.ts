@@ -17,7 +17,8 @@ const routes: Routes = [
   {
     path: 'overview',
     component: OverviewComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: { quiz: LoadQuizzies }
   },
   {
     path: 'quiz',
