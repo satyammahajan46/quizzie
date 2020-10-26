@@ -6,6 +6,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ViewQuizziesComponent } from './view-quizzies/view-quizzies.component';
 import { LoadQuizzies } from './load-quizzies.resolve';
 import { LoadQuiz } from './load-quiz';
+import { JoinQuizComponent } from './join-quiz/join-quiz.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'overview',
     pathMatch: 'full',
+  },
+  {
+    path: 'join-quiz',
+    component: JoinQuizComponent,
   },
   {
     path: 'overview',

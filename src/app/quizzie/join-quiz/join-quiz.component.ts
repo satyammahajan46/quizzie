@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../appStore/app.reducer';
+import * as fromApp from '../../appStore/app.reducer';
 
 @Component({
   selector: 'app-join-quiz',
