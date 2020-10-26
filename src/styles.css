@@ -98,6 +98,10 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.flex-direction-column {
+  flex-direction: column;
+}
+
 .justify-content-center {
   justify-content: center;
 }

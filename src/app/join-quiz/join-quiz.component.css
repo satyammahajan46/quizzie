@@ -1,0 +1,12 @@
+form {
+  text-align: center;
+}
+
+
+.flex {
+  height: 70vh;
+}
+
+mat-horizontal-stepper {
+  text-align: center;
+}

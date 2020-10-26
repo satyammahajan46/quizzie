@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../appStore/app.reducer';
 import * as AuthActions from '../../auth/store/auth.actions'
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
@@ -10,13 +11,18 @@ import * as AuthActions from '../../auth/store/auth.actions'
 })
 
 export class MainHeaderComponent implements OnInit {
+
+
   homeDashboard: ButtonInfo;
   loginLogout: ButtonInfo;
   isAuth = false;
   storeSub: Subscription;
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(
+    private store: Store<fromApp.AppState>,
+  ) {
 
   }
+
 
   ngOnInit() {
     this.changeButtonInfo();
@@ -32,7 +38,7 @@ export class MainHeaderComponent implements OnInit {
   }
   changeButtonInfo() {
     if (this.isAuth) {
-      this.homeDashboard = { title: 'Dashboard', link: '/quizzie', icon: 'table_chart' };
+      this.homeDashboard = { title: 'Dashboard', link: '/quizzie/overview', icon: 'table_chart' };
       this.loginLogout = { title: 'Logout', link: '/auth', icon: 'account_circle' };
     } else {
       this.homeDashboard = { title: 'Home', link: '/home', icon: 'home' };

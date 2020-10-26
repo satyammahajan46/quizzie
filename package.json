@@ -36,12 +36,13 @@
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.3",
+    "mongoose-auto-increment": "^5.0.1",
     "rxjs": "^6.6.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1000.8",
+    "@angular-devkit/build-angular": "^0.1002.0",
     "@angular/cli": "~10.0.8",
     "@angular/compiler-cli": "~10.0.14",
     "@angular/language-service": "~10.0.14",

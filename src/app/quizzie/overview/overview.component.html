@@ -39,7 +39,7 @@
         <mat-card-content>
 
           <!-- list of questions -->
-          <mat-list *ngIf="!questions;else questionsC">
+          <mat-list *ngIf="!loadedQuiz;else questionsC">
             <mat-list-item> Please select a quiz </mat-list-item>
           </mat-list>
           <ng-template #questionsC>
@@ -63,9 +63,14 @@
                 </button>
               </mat-list-item>
               <mat-divider></mat-divider>
+
             </mat-list>
+
           </ng-template>
         </mat-card-content>
+        <mat-card-actions *ngIf='loadedQuiz'>
+          <button (click)="viewQuiz()" mat-raised-button color="accent">View all</button>
+        </mat-card-actions>
       </mat-card>
     </div>
 
@@ -81,7 +86,7 @@
         <mat-card-content>
           <mat-list>
             <mat-list-item> Under Progress... </mat-list-item>
-            
+
           </mat-list>
         </mat-card-content>
       </mat-card>

@@ -1,29 +1,29 @@
  <mat-toolbar color="primary">
-   <button mat-icon-button routerLink="/home" class="example-icon" aria-label="Example icon-button with menu icon">
+   <button mat-icon-button routerLink="/home">
      <mat-icon>menu</mat-icon>
    </button>
    <span>Quizzie</span>
    <span class="example-spacer"></span>
 
-   <button mat-button class="icon" routerLink={{homeDashboard.link}} routerLinkActive="mat-accent"
-     aria-label="Example icon-button with home icon">
+   <button mat-button routerLink={{homeDashboard.link}} routerLinkActive="mat-accent"
+     [routerLinkActiveOptions]="{exact: true}">
      <span>{{homeDashboard.title}}</span>
      <mat-icon>{{homeDashboard.icon}}</mat-icon>
    </button>
 
-   <button mat-button class="icon" routerLink="/home" routerLinkActive="mat-accent"
+   <button mat-button routerLink="/join-quiz" routerLinkActive="mat-accent"
      aria-label="Example icon-button with text_snippet icon">
      <span>Join Quiz</span>
      <mat-icon>text_snippet</mat-icon>
    </button>
 
-   <button (click)="isAuth?onSubmit():null" mat-button class="icon" [routerLink]="!isAuth ? loginLogout.link :null"
+   <button (click)="isAuth?onSubmit():null" mat-button [routerLink]="!isAuth ? loginLogout.link :null"
      [routerLinkActive]="isAuth?'null':'mat-accent'" aria-label="Example icon-button with account circleng icon">
      <span>{{loginLogout.title}}</span>
      <mat-icon>{{loginLogout.icon}}</mat-icon>
    </button>
 
-   <!-- <button (click)=" onSubmit()" mat-button class="icon"
+   <!-- <button (click)=" onSubmit()" mat-button
      aria-label="Example icon-button with account circleng icon" *ngIf="isAuth">
      <span>{{loginLogout.title}}</span>
      <mat-icon>{{loginLogout.icon}}</mat-icon>

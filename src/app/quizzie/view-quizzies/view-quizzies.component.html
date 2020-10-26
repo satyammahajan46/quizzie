@@ -7,12 +7,9 @@
             {{quiz.name}}
           </mat-panel-title>
           <mat-panel-description>
+            Join Quiz using:
             {{
-              (quiz.questions[0].question.length>10)
-              ?
-              (quiz.questions[0].question | slice:0:10)+'...'
-              :
-              (quiz.questions[0].question)
+             quiz.joinID
             }}
           </mat-panel-description>
         </mat-expansion-panel-header>

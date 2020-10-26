@@ -6,7 +6,26 @@ mat-icon {
   margin: auto;
 }
 
-.icon span {
+/* .icon{
+  text-h
+} */
+
+button span {
   padding: 5px;
+}
+
+button span:first-child {
+  display: none;
+}
+
+
+@media screen and (min-width: 500px) {
+
+  /* .icon {
+   text
+  } */
+  button span:first-child {
+    display: inline;
+  }
 
 }

@@ -1,5 +1,5 @@
 mat-card {
-  width: 40%;
+  width: min-content;
 }
 
 
@@ -9,4 +9,11 @@ mat-card {
 
 a:hover {
   color: whitesmoke;
+}
+
+@media screen and (min-width: 500px) {
+  mat-card {
+    width: 40%;
+  }
+
 }

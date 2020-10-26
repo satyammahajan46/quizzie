@@ -172,7 +172,7 @@ export class QuizzieEffects {
                 };
 
                 parsedData.push(
-                  new Quiz(quiz._id, quiz.name, [question])
+                  new Quiz(quiz._id, quiz.name, [question], quiz.joinID)
                 );
               }
               return QuizActions.loadQuizziesComplete({ quizzies: parsedData, totalItems: +resData.totalItems });
@@ -207,6 +207,7 @@ export class QuizzieEffects {
         }>(environment.backEndURL + '/quizzie/quiz/' + action.id)
           .pipe(
             map(resData => {
+
               const quiz = resData.quiz;
               const parsedData: Quiz = {
                 name: quiz.name,
@@ -229,6 +230,7 @@ export class QuizzieEffects {
                 questions.push(ques);
               });
               parsedData.questions = questions;
+              parsedData.joinID = quiz.joinID;
               return QuizActions.loadQuizComplete({ quiz: parsedData });
             }),
             catchError((err: Error) => {

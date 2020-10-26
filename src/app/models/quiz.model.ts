@@ -2,7 +2,8 @@ export class Quiz {
   constructor(
     public id: string,
     public name: string,
-    public questions: Question[]
+    public questions: Question[],
+    public joinID?: number
   ) { }
 
 

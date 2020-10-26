@@ -1,6 +1,7 @@
 const { text } = require("express");
 const mongoose = require("mongoose");
-const { stringify } = require("querystring");
+const autoIncrement = require("mongoose-auto-increment");
+autoIncrement.initialize(mongoose.connection);
 const Schema = mongoose.Schema;
 
 const quizSchema = new Schema(
@@ -25,4 +26,9 @@ const quizSchema = new Schema(
   { timestamps: true }
 );
 
+quizSchema.plugin(autoIncrement.plugin, {
+  model: "Quiz",
+  field: "joinID",
+  startAt: 100000,
+});
 module.exports = mongoose.model("Quiz", quizSchema);

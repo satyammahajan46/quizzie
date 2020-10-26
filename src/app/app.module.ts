@@ -21,18 +21,26 @@ import { AuthEffects } from './auth/store/auth.effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JoinQuizComponent } from './join-quiz/join-quiz.component';
+import { MatStepperModule, MatFormFieldModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  declarations: [AppComponent, MainpageComponent],
+  declarations: [AppComponent, MainpageComponent, JoinQuizComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatSnackBarModule,
     HeaderModule,
     MatCardModule,
     MatButtonModule,
+    MatStepperModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
