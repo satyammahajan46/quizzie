@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserData, User } from '../../models/user.model';
 import { Router } from '@angular/router';
@@ -233,11 +233,64 @@ export class QuizzieEffects {
               parsedData.joinID = quiz.joinID;
               return QuizActions.loadQuizComplete({ quiz: parsedData });
             }),
-            catchError((err: Error) => {
+            catchError((err: HttpErrorResponse) => {
 
               let msg = 'An unknown error occured!';
               if (err.message) {
                 msg = err.message;
+              }
+              this.snackBar.open(msg, '', {
+                duration: 3000,
+                panelClass: ['danger-pop-up-msg']
+              });
+              return of(QuizActions.error({ error: msg }));
+            })
+          );
+      })
+    ) // action pipe ending
+  );
+
+  loadJoinQuiz$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.loadJoinQuiz),
+      mergeMap((action) => {
+        return this.http.get<{
+          message: string,
+          quiz: any,
+        }>(environment.backEndURL + '/quizzie/join-quiz/' + action.pin)
+          .pipe(
+            map(resData => {
+
+              const quiz = resData.quiz;
+              const parsedData: Quiz = {
+                name: quiz.name,
+                id: quiz._id,
+                questions: null
+              };
+              const questions: Question[] = Array();
+              quiz.questions.forEach(element => {
+                const ques: Question = {
+                  question: element.question,
+                  options: {
+                    OptionA: element.options[0],
+                    OptionB: element.options[1],
+                    OptionC: element.options[2],
+                    OptionD: element.options[3]
+                  },
+                  id: element._id,
+                };
+                questions.push(ques);
+              });
+              parsedData.questions = questions;
+              parsedData.joinID = quiz.joinID;
+              return QuizActions.loadQuizComplete({ quiz: parsedData });
+            }),
+            catchError((err: HttpErrorResponse) => {
+
+              let msg = 'An unknown error occured!';
+              // console.log(err);
+              if (err && err.error.message) {
+                msg = err.error.message;
               }
               this.snackBar.open(msg, '', {
                 duration: 3000,

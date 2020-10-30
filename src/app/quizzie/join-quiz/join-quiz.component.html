@@ -1,7 +1,7 @@
 <div class="flex flex-direction-column justify-content-center">
 
 
-  <mat-horizontal-stepper class="m-2" [linear]="true" #stepper>
+  <mat-horizontal-stepper (selectionChange)="selectionChange($event)" class="m-2" [linear]="true" #stepper>
     <mat-step [stepControl]="quizPinForm">
       <form [formGroup]="quizPinForm">
         <ng-template matStepLabel>Enter Quiz Pin</ng-template>
@@ -10,7 +10,7 @@
           <input matInput placeholder="123456789" formControlName="pin" required>
         </mat-form-field>
         <div>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button (click)="fetchQuiz()" matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
@@ -28,10 +28,10 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Ready to start Quiz</ng-template>
-      <p>Quiz Name: {{quizName|async}}</p>
+      <p>Quiz Name: {{quizName}}</p>
       <p>Name: {{nameForm.get('name').value}}</p>
       <div>
-        <button mat-button (click)="onSubmit()">Start Quiz</button>
+        <button mat-button (click)="onSubmit()" [disabled]="!isValid">Start Quiz</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

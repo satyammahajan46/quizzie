@@ -126,6 +126,31 @@ exports.getQuiz = async (req, res, next) => {
   }
 };
 
+exports.getJoinQuiz = async (req, res, next) => {
+  try {
+    const pin = req.params.pin;
+    const quiz = await Quiz.findOne({
+      $and: [{ joinID: pin }],
+    }).populate({ path: "questions", select: "-answer" });
+
+    if (!quiz) {
+      const error = new Error("No quiz found");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    res.status(200).json({
+      message: "Here is your requested data",
+      quiz: quiz,
+    });
+  } catch (err) {
+    const error = new Error("Unknown error occured");
+    error.statusCode = 500;
+    error.data = err;
+    next(error);
+  }
+};
+
 exports.updateQuiz = async (req, res, next) => {
   const errors = validationResult(req);
   try {

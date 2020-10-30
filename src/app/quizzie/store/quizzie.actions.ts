@@ -6,6 +6,7 @@ export const LOADQUIZZIES = '[Quizzie Page] loadQuizzies';
 export const LOADQUIZZIESCOMPLETE = '[Quizzie Page] loadQuizziesComplete';
 
 export const LOADQUIZ = '[Quizzie Page] loadQuiz';
+export const LOADJOINQUIZ = '[Quizzie Page] loadJoinQuiz';
 export const LOADQUIZCOMPLETE = '[Quizzie Page] loadQuizComplete';
 
 export const CREATEQUIZ = '[Quizzie Page] createQuiz';
@@ -28,6 +29,12 @@ export const loadQuizziesComplete = createAction(
 export const loadQuiz = createAction(LOADQUIZ, props<{
   id: string
 }>());
+
+
+export const loadJoinQuiz = createAction(LOADJOINQUIZ, props<{
+  pin: string
+}>());
+
 
 export const loadQuizComplete = createAction(
   LOADQUIZCOMPLETE, props<{ quiz: Quiz }>()
