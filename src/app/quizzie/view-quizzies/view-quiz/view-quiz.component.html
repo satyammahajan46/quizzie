@@ -1,0 +1,50 @@
+<div class="row flex justify-content-center flex-wrap">
+  <div class="col-sm-12 text-align-center">
+    <h1>View Quiz</h1>
+    <h3>Join pin: {{quiz.joinID}}</h3>
+  </div>
+
+  <!-- quiz with question from -->
+  <div class="col-sm-6">
+    <mat-card>
+
+      <mat-card-content>
+        <h3>{{quiz.name}}</h3>
+        <div *ngFor="let ques of quiz.questions;">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h5>{{ques.question}}</h5>
+            </div>
+          </div>
+
+          <div class="row">
+            <mat-radio-group aria-label="Select an option">
+              <div class="col-sm-12">
+                <mat-radio-button value="ques.options.OptionA">{{ques.options.OptionA}}
+                </mat-radio-button>
+                <mat-radio-button value="ques.options.OptionB">{{ques.options.OptionB}}
+                </mat-radio-button>
+              </div>
+              <div class="col-sm-12">
+                <mat-radio-button value="ques.options.OptionC">{{ques.options.OptionC}}
+                </mat-radio-button>
+                <mat-radio-button value="ques.options.OptionD">{{ques.options.OptionD}}
+                </mat-radio-button>
+              </div>
+            </mat-radio-group>
+            <div class="col-sm-12">
+              <p>Answer: {{ques.answer}}</p>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button (click)="onEdit()" mat-raised-button color="primary">Edit Quiz</button>
+        <button (click)="onCancel()" mat-raised-button color="warn">Cancel</button>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>
+</div>

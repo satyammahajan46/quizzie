@@ -1,0 +1,53 @@
+<div class="row flex justify-content-center flex-wrap">
+  <div class="col-sm-12 text-align-center">
+    <h1>Answer Quiz</h1>
+  </div>
+
+  <!-- quiz with question from -->
+  <div class="col-sm-6">
+    <mat-card>
+
+      <mat-card-content>
+        <form [formGroup]="quizForm">
+          <h3>{{quiz.name}}</h3>
+          <mat-divider></mat-divider>
+          <div formArrayName="questions" *ngFor="let ques of getArrayControl(); let i=index">
+
+            <div [formGroupName]="i">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <h4>{{ques.get("question").value}}</h4>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <mat-radio-group aria-label="Select an option" formControlName="answer">
+                  <div class="col-sm-12">
+                    <mat-radio-button [value]="ques.get('OptionA').value">{{ques.get("OptionA").value}}
+                    </mat-radio-button>
+                    <mat-radio-button [value]="ques.get('OptionB').value">{{ques.get("OptionB").value}}
+                    </mat-radio-button>
+                  </div>
+                  <div class="col-sm-12">
+                    <mat-radio-button [value]="ques.get('OptionC').value">{{ques.get("OptionC").value}}
+                    </mat-radio-button>
+                    <mat-radio-button [value]="ques.get('OptionD').value">{{ques.get("OptionD").value}}
+                    </mat-radio-button>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button (click)="onSubmit()" mat-raised-button color="primary">Submit Quiz</button>
+        <button (click)="onCancel()" mat-raised-button color="warn">Cancel</button>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>
+</div>

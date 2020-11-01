@@ -39,19 +39,20 @@
         <div class="row">
           <div class="col-sm-12 p-1">
             <button mat-flat-button color="primary" [routerLink]='["../edit",quiz.id]'>Edit Quiz</button>&nbsp;
-            <button mat-flat-button color="accent" value="quiz.id">View Quiz</button>
+            <button mat-flat-button color="accent" [routerLink]='["../view",quiz.id]'>View Quiz</button>
           </div>
         </div>
       </mat-expansion-panel>
 
     </div>
   </mat-accordion>
-</div>
 
-<div class="row">
-  <div class="col-sm-12 position-absolute b-0">
-    <mat-paginator [length]="getTotalQuiz()" [pageSize]="5" [pageSizeOptions]="[5]"
-      (page)="pageEvent = updateQuizzies($event)">
-    </mat-paginator>
+  <div class="row clearfix">
+    <div class="col-sm-12 position-absolute b-0  clearfix">
+      <mat-paginator [length]="getTotalQuiz()" [pageSize]="5" [pageSizeOptions]="[5]"
+        (page)="pageEvent = updateQuizzies($event)">
+      </mat-paginator>
+    </div>
   </div>
+
 </div>

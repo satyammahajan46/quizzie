@@ -181,3 +181,7 @@ a:hover {
 .b-0 {
   bottom: 0;
 }
+
+.clearfix {
+  overflow: auto;
+}

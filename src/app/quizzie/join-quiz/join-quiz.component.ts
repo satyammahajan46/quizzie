@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 import { Actions, ofType } from '@ngrx/effects';
 import { mergeMap, take, map, catchError, distinctUntilChanged, debounceTime, first } from 'rxjs/operators';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { relative } from 'path';
 
 @Component({
   selector: 'app-join-quiz',
@@ -25,6 +27,8 @@ export class JoinQuizComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<fromApp.AppState>,
+    private router: Router,
+    private route: ActivatedRoute,
     private actions$: Actions
   ) {
   }
@@ -102,5 +106,13 @@ export class JoinQuizComponent implements OnInit, OnDestroy {
     const quizPin = this.quizPinForm.value.pin;
     const name = this.nameForm.value.name;
     console.log(quizPin + ' ' + name);
+
+    const navigationExtra: NavigationExtras = {
+      state: {
+        fullname: name
+      },
+      relativeTo: this.route
+    };
+    this.router.navigate(['./' + quizPin], navigationExtra);
   }
 }

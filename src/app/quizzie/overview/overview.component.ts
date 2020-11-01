@@ -81,7 +81,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   viewQuiz() {
-    this.router.navigate(['../quiz/edit', this.loadedQuiz.id], { relativeTo: this.route });
+    this.router.navigate(['../quiz/view', this.loadedQuiz.id], { relativeTo: this.route });
   }
 
 }

@@ -16,12 +16,14 @@ import { QuizzieEffects } from './store/quizzie.effects';
 import { ViewQuizziesComponent } from './view-quizzies/view-quizzies.component';
 import { MatIconModule } from '@angular/material/icon';
 import { JoinQuizComponent } from './join-quiz/join-quiz.component';
+import { ViewQuizComponent } from './view-quizzies/view-quiz/view-quiz.component';
+import { SubmitQuizComponent } from './join-quiz/submit-quiz/submit-quiz.component';
 
 
 
 
 @NgModule({
-  declarations: [OverviewComponent, QuizEditComponent, ViewQuizziesComponent, JoinQuizComponent],
+  declarations: [OverviewComponent, QuizEditComponent, ViewQuizziesComponent, JoinQuizComponent, ViewQuizComponent, SubmitQuizComponent],
   imports: [
     CommonModule,
     FormsModule,

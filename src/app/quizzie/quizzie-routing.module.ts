@@ -7,6 +7,8 @@ import { ViewQuizziesComponent } from './view-quizzies/view-quizzies.component';
 import { LoadQuizzies } from './load-quizzies.resolve';
 import { LoadQuiz } from './load-quiz';
 import { JoinQuizComponent } from './join-quiz/join-quiz.component';
+import { ViewQuizComponent } from './view-quizzies/view-quiz/view-quiz.component';
+import { SubmitQuizComponent } from './join-quiz/submit-quiz/submit-quiz.component';
 
 
 const routes: Routes = [
@@ -18,6 +20,10 @@ const routes: Routes = [
   {
     path: 'join-quiz',
     component: JoinQuizComponent,
+  },
+  {
+    path: 'join-quiz/:id',
+    component: SubmitQuizComponent,
   },
   {
     path: 'overview',
@@ -41,6 +47,11 @@ const routes: Routes = [
         path: 'view',
         component: ViewQuizziesComponent,
         resolve: { quiz: LoadQuizzies }
+      },
+      {
+        path: 'view/:id',
+        component: ViewQuizComponent,
+        resolve: { quiz: LoadQuiz }
       }
     ]
   }
