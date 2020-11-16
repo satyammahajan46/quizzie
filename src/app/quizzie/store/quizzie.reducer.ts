@@ -67,6 +67,18 @@ const quizzieReducer = createReducer(
     loading: true,
     isLoaded: false
   })),
+  on(QuizzieActions.submitQuiz, state => ({
+    ...state,
+    loading: true,
+    isLoaded: false
+  })),
+  on(QuizzieActions.submitQuizComplete, state => ({
+    ...state,
+    loading: false,
+    isLoaded: true
+  })),
+
+
 
 
 );

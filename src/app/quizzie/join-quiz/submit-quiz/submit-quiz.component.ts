@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { AppState, selectQuizzieQuiz } from 'src/app/appStore/app.reducer';
 import { Quiz } from 'src/app/models/quiz.model';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { isLoadedQuizzie } from '../../../appStore/app.reducer';
+import { submitQuiz } from '../../store/quizzie.actions';
 
 @Component({
   selector: 'app-submit-quiz',
@@ -14,15 +16,18 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 export class SubmitQuizComponent implements OnInit, OnDestroy {
 
   private storeSub: Subscription;
+  private isLoadedSub: Subscription;
   quiz: Quiz;
   name: string;
   quizForm: FormGroup;
+  isLoaded: boolean;
   constructor(
     private store: Store<AppState>,
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
+    this.isLoaded = false;
 
     if (this.router.getCurrentNavigation().extras.state.fullname) {
       // this.quizForm.get('name').setValue(this.router.getCurrentNavigation().extras.state.fullname);
@@ -37,12 +42,19 @@ export class SubmitQuizComponent implements OnInit, OnDestroy {
     if (this.storeSub) {
       this.storeSub.unsubscribe();
     }
+    if (this.isLoadedSub) {
+      this.isLoadedSub.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
     this.storeSub = this.store.select(selectQuizzieQuiz).subscribe(q => {
       this.quiz = q;
-      console.log(q);
+    });
+
+    this.isLoadedSub = this.store.select(isLoadedQuizzie).subscribe(isLoaded => {
+      console.log(isLoaded);
+      this.isLoaded = isLoaded;
     });
 
     this.initForm();
@@ -96,7 +108,17 @@ export class SubmitQuizComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.quizForm.get('name').setValue(this.name);
-    console.log(this.quizForm);
+
+    if (this.quizForm.valid) {
+      // send form data to back end
+      console.log(this.quizForm.value);
+
+      this.quizForm.disable();
+      this.store.dispatch(submitQuiz({
+        name: this.quizForm.get('name').value,
+        questions: this.quizForm.get('questions').value
+      }));
+    }
 
   }
 }

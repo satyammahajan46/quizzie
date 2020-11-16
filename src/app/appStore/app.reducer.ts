@@ -27,3 +27,10 @@ export const selectQuizzieQuizies = createSelector(
   selectQuizzie,
   (state: fromQuizzie.State) => state.quizzies
 );
+
+
+export const isLoadedQuizzie = createSelector(
+  selectQuizzie,
+  (state: fromQuizzie.State) => state.isLoaded
+);
+

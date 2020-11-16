@@ -44,8 +44,14 @@
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button (click)="onSubmit()" mat-raised-button color="primary">Submit Quiz</button>
-        <button (click)="onCancel()" mat-raised-button color="warn">Cancel</button>
+        <button (click)="onSubmit()" [disabled]="!isLoaded" mat-raised-button color="primary">
+          <mat-icon [style.display]="isLoaded?'none':'inline-block'">
+            <mat-spinner color="primary" diameter="20">
+            </mat-spinner>
+          </mat-icon>
+          Submit Quiz
+        </button>
+        <button (click)="onCancel()" [disabled]="!isLoaded" mat-raised-button color="warn">Cancel</button>
       </mat-card-actions>
 
     </mat-card>
