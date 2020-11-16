@@ -11,6 +11,13 @@ const quizSchema = new Schema(
       ref: "User",
       required: true,
     },
+    statID: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Stats",
+        required: true,
+      },
+    ],
     name: {
       type: String,
       required: true,

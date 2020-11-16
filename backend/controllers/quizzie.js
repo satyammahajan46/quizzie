@@ -6,6 +6,8 @@ const Quiz = require("../models/quiz");
 
 const Question = require("../models/question");
 
+const Stats = require("../models/stats");
+
 const mongoose = require("mongoose");
 
 exports.getQuizzies = async (req, res, next) => {
@@ -126,31 +128,6 @@ exports.getQuiz = async (req, res, next) => {
   }
 };
 
-exports.getJoinQuiz = async (req, res, next) => {
-  try {
-    const pin = req.params.pin;
-    const quiz = await Quiz.findOne({
-      $and: [{ joinID: pin }],
-    }).populate({ path: "questions", select: "-answer" });
-
-    if (!quiz) {
-      const error = new Error("No quiz found");
-      error.statusCode = 404;
-      return next(error);
-    }
-
-    res.status(200).json({
-      message: "Here is your requested data",
-      quiz: quiz,
-    });
-  } catch (err) {
-    const error = new Error("Unknown error occured");
-    error.statusCode = 500;
-    error.data = err;
-    next(error);
-  }
-};
-
 exports.updateQuiz = async (req, res, next) => {
   const errors = validationResult(req);
   try {
@@ -247,9 +224,17 @@ exports.deleteQuiz = async (req, res, next) => {
       await Question.findByIdAndDelete(value._id);
     }
 
-    let result = (await quiz).deleteOne();
+    const statsID = (await quiz).toObject().statID;
+    for (const value of statsID) {
+      await Stats.findByIdAndDelete(value);
+    }
 
-    result = await User.findById(user).quiz.pull(quizID);
+    let userDB = await User.findById(user);
+
+    await userDB.updateOne({
+      $pull: { quiz: quizID },
+    });
+    result = (await quiz).deleteOne();
 
     if (result) {
       res.status(200).json({

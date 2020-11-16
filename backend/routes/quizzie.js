@@ -59,8 +59,6 @@ router.post(
 
 router.get("/quiz/:quizID", isAuth, quizzieController.getQuiz);
 
-router.get("/join-quiz/:pin", quizzieController.getJoinQuiz);
-
 router.put(
   "/quiz/:quizID",
   isAuth,

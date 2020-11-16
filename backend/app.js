@@ -8,6 +8,8 @@ const authRoutes = require("./routes/auth");
 
 const quizzieRoutes = require("./routes/quizzie");
 
+const joinQuizRoutes = require("./routes/join-quiz");
+
 const app = express();
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
@@ -26,6 +28,8 @@ app.use((req, res, next) => {
 app.use("/auth", authRoutes);
 
 app.use("/quizzie", quizzieRoutes);
+
+app.use("/join-quiz", joinQuizRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);

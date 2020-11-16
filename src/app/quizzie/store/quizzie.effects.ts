@@ -257,7 +257,7 @@ export class QuizzieEffects {
         return this.http.get<{
           message: string,
           quiz: any,
-        }>(environment.backEndURL + '/quizzie/join-quiz/' + action.pin)
+        }>(environment.backEndURL + '/join-quiz/' + action.pin)
           .pipe(
             map(resData => {
 
