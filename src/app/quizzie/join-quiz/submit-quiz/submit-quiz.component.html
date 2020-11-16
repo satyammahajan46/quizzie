@@ -36,6 +36,7 @@
                     <mat-radio-button [value]="ques.get('OptionD').value">{{ques.get("OptionD").value}}
                     </mat-radio-button>
                   </div>
+                  <mat-error *ngIf="ques.touched && ques.get('answer').hasError('required')">Select a answer</mat-error>
                 </mat-radio-group>
               </div>
               <mat-divider></mat-divider>

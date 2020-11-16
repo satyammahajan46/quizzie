@@ -11,6 +11,7 @@ import { Action } from '@ngrx/store';
 import * as QuizActions from '../store/quizzie.actions';
 import { mergeMap, map, catchError, tap, take } from 'rxjs/operators';
 import { Question, QuizError, Options, Quiz } from '../../models/quiz.model';
+import { Stat } from '../../models/stat.model';
 
 const parseError = (quizError: QuizError, errorData) => {
   const questionErr = errorData;
@@ -302,6 +303,63 @@ export class QuizzieEffects {
       })
     ) // action pipe ending
   );
+
+  submitQuiz$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.submitQuiz),
+      mergeMap((action) => {
+        return this.http.post<{
+          message: string,
+          stat: any
+        }>(environment.backEndURL + '/join-quiz/submitquiz', {
+          name: action.name,
+          questions: action.questions,
+          quizID: action.quizID
+        })
+          .pipe(
+            map(resData => {
+
+              const stat = resData.stat;
+              const parsedData: Stat = {
+                name: stat.name,
+                id: stat._id,
+                quizID: stat.quizID,
+                correctAnswers: stat.correctAnswer,
+                correctAnswerID: stat.correctAnswersID,
+                totalQuestions: stat.totalQues
+              };
+              return QuizActions.submitQuizComplete({ stat: parsedData });
+            }),
+            catchError((err: HttpErrorResponse) => {
+
+              let msg = 'An unknown error occured!';
+              // console.log(err);
+              if (err && err.error.message) {
+                msg = err.error.message;
+              }
+              this.snackBar.open(msg, '', {
+                duration: 3000,
+                panelClass: ['danger-pop-up-msg']
+              });
+              return of(QuizActions.error({ error: msg }));
+            })
+          );
+      })
+    ) // action pipe ending
+  );
+
+
+  // IMPLEMENT IF REQUIRED TO NAVIGATE & reload quizzies
+  submitQuizComplete$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.submitQuizComplete),
+      tap(action => {
+        // console.log('navigate from here');
+        this.router.navigate(['quizzie', 'view-results']);
+      })
+    ), { dispatch: false }
+  );
+
 
   genericError$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(

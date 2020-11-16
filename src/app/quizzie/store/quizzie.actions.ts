@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Quiz, QuizError, Question } from '../../models/quiz.model';
+import { Stat } from '../../models/stat.model';
 
 
 export const LOADQUIZZIES = '[Quizzie Page] loadQuizzies';
@@ -21,12 +22,12 @@ export const SUBMIT_QUIZ_COMPLETE = '[Quizzie Page] submitQUiZCOMPLETE';
 
 
 export const submitQuiz = createAction(SUBMIT_QUIZ, props<{
-  name: string, questions: Question[]
+  name: string, quizID: string, questions: Question[]
 }>());
 
 
 export const submitQuizComplete = createAction(
-  SUBMIT_QUIZ_COMPLETE
+  SUBMIT_QUIZ_COMPLETE, props<({ stat: Stat })>()
 );
 
 

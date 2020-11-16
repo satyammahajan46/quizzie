@@ -53,7 +53,6 @@ export class SubmitQuizComponent implements OnInit, OnDestroy {
     });
 
     this.isLoadedSub = this.store.select(isLoadedQuizzie).subscribe(isLoaded => {
-      console.log(isLoaded);
       this.isLoaded = isLoaded;
     });
 
@@ -79,6 +78,7 @@ export class SubmitQuizComponent implements OnInit, OnDestroy {
       name: [this.quiz.name, [Validators.required]],
       questions: this.formBuilder.array(questions)
     });
+
   }
 
   createQuestionInfo(quesID, ques, ans, oA, oB, oC, oD): FormGroup {
@@ -109,13 +109,17 @@ export class SubmitQuizComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.quizForm.get('name').setValue(this.name);
 
+    this.getArrayControl().forEach(ele => {
+      ele.markAsTouched();
+    });
+
     if (this.quizForm.valid) {
       // send form data to back end
-      console.log(this.quizForm.value);
 
       this.quizForm.disable();
       this.store.dispatch(submitQuiz({
         name: this.quizForm.get('name').value,
+        quizID: this.quiz.id,
         questions: this.quizForm.get('questions').value
       }));
     }

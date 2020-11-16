@@ -1,0 +1,28 @@
+<div class="row flex justify-content-center flex-wrap">
+  <div class="col-sm-12 text-align-center">
+    <h1>Results</h1>
+  </div>
+
+  <div class="col-sm-12 text-align-center">
+    <mat-card>
+      <mat-card-title>{{stats.name}}'s Result</mat-card-title>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-sm-12">
+            <p>You answered {{stats.correctAnswers}} correct questions out of {{stats.totalQuestions}} number of
+              questions</p>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+        <div class="row">
+          <div class="col-sm-12">
+            <h1>Your Score: {{(stats.correctAnswers/stats.totalQuestions)*100}}</h1>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -9,6 +9,9 @@ import { LoadQuiz } from './load-quiz';
 import { JoinQuizComponent } from './join-quiz/join-quiz.component';
 import { ViewQuizComponent } from './view-quizzies/view-quiz/view-quiz.component';
 import { SubmitQuizComponent } from './join-quiz/submit-quiz/submit-quiz.component';
+import { ViewResultsComponent } from './join-quiz/view-results/view-results.component';
+import { ViewResultsGuard } from './join-quiz/view-results.guard';
+import { JoinQuizsGuard } from './join-quiz/join-quiz.guard';
 
 
 const routes: Routes = [
@@ -24,6 +27,12 @@ const routes: Routes = [
   {
     path: 'join-quiz/:id',
     component: SubmitQuizComponent,
+    canActivate: [JoinQuizsGuard]
+  },
+  {
+    path: 'view-results',
+    component: ViewResultsComponent,
+    canActivate: [ViewResultsGuard]
   },
   {
     path: 'overview',

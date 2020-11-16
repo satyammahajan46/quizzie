@@ -105,7 +105,6 @@ export class JoinQuizComponent implements OnInit, OnDestroy {
   onSubmit() {
     const quizPin = this.quizPinForm.value.pin;
     const name = this.nameForm.value.name;
-    console.log(quizPin + ' ' + name);
 
     const navigationExtra: NavigationExtras = {
       state: {

@@ -18,12 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { JoinQuizComponent } from './join-quiz/join-quiz.component';
 import { ViewQuizComponent } from './view-quizzies/view-quiz/view-quiz.component';
 import { SubmitQuizComponent } from './join-quiz/submit-quiz/submit-quiz.component';
+import { ViewResultsComponent } from './join-quiz/view-results/view-results.component';
 
 
 
 
 @NgModule({
-  declarations: [OverviewComponent, QuizEditComponent, ViewQuizziesComponent, JoinQuizComponent, ViewQuizComponent, SubmitQuizComponent],
+  declarations: [OverviewComponent, QuizEditComponent, ViewQuizziesComponent, JoinQuizComponent, ViewQuizComponent, SubmitQuizComponent, ViewResultsComponent],
   imports: [
     CommonModule,
     FormsModule,

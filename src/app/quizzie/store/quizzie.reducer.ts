@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as QuizzieActions from './quizzie.actions';
 import { Quiz, QuizError } from '../../models/quiz.model';
+import { Stat } from 'src/app/models/stat.model';
 
 
 
@@ -12,6 +13,7 @@ export interface State {
   totalQuiz: number;
   quizData: Quiz;
   cEditError: QuizError;
+  statData: Stat;
 }
 
 export const initialState: State = {
@@ -20,7 +22,8 @@ export const initialState: State = {
   quizzies: null,
   quizData: null,
   cEditError: null,
-  totalQuiz: 0
+  totalQuiz: 0,
+  statData: null
 };
 
 
@@ -72,10 +75,11 @@ const quizzieReducer = createReducer(
     loading: true,
     isLoaded: false
   })),
-  on(QuizzieActions.submitQuizComplete, state => ({
+  on(QuizzieActions.submitQuizComplete, (state, { stat }) => ({
     ...state,
     loading: false,
-    isLoaded: true
+    isLoaded: true,
+    statData: stat
   })),
 
 
