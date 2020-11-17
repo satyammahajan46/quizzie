@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backEndURL: 'localhost:3000/api'
+  backEndURL: 'https://quizapp9931.herokuapp.com/api'
 };
