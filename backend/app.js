@@ -13,10 +13,7 @@ const joinQuizRoutes = require("./routes/join-quiz");
 const app = express();
 
 mongoose
-  .connect(
-    process.env.CONNECT_URI,
-    { useFindAndModify: false }
-  )
+  .connect(process.env.CONNECT_URI, { useFindAndModify: false })
   .then((result) => {
     console.log("Connection established with database");
   })
@@ -26,15 +23,15 @@ app.use(bodyParser.json()); // application/json
 
 app.use("/", express.static(path.join(__dirname, "quizApp")));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "OPTIONS, GET, POST, PUT, DELETE"
+//   );
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
 
 app.use("api/auth", authRoutes);
 
@@ -53,6 +50,5 @@ app.use((error, req, res, next) => {
   const data = error.data;
   res.status(status).json({ message: message, data: data });
 });
-
 
 module.exports = app;
