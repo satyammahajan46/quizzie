@@ -43,6 +43,7 @@ export class ViewQuizziesComponent implements OnInit, OnDestroy {
       pageNumber: event.pageIndex + 1,
       items: event.pageSize
     }));
+    return event;
 
   }
 }
