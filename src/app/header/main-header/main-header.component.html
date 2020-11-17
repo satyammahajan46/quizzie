@@ -18,7 +18,7 @@
    </button>
 
    <button (click)="isAuth?onSubmit():null" mat-button [routerLink]="!isAuth ? loginLogout.link :'null'"
-     [routerLinkActive]="isAuth?'null':'mat-accent'" aria-label="Example icon-button with account circleng icon">
+     [routerLinkActive]="!isAuth?'null':'mat-accent'" aria-label="Example icon-button with account circleng icon">
      <span>{{loginLogout.title}}</span>
      <mat-icon>{{loginLogout.icon}}</mat-icon>
    </button>
