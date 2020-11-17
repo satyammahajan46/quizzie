@@ -1,0 +1,6 @@
+{
+  "env": {
+    "CONNECT_URI": "mongodb+srv://quizzieApp:6OmeOLA1tUmJRhfQ@quizzie.psn7y.mongodb.net/quizzie?retryWrites=true&w=majority",
+    "JWT_KEY": "vbksdbhjbawibfkjadbgigbawkbfiuarwhgknsdvgiarwng;oio3er2eg41er3h03e1h5eth0et2H4erv0erg5er"
+  }
+}
