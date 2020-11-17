@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map, take, tap } from 'rxjs/operators';
 import { Options } from 'src/app/models/quiz.model';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../appStore/app.reducer';
-import * as QuizzieActions from '../store/quizzie.actions';
 import { Quiz, QuizError } from '../../models/quiz.model';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { AppState } from 'src/app/appStore/app.reducer';
+import { editQuiz, createQuiz } from '../store/quizzie.actions';
 
 
 
@@ -34,7 +33,7 @@ export class QuizEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
     private changeDetRef: ChangeDetectorRef,
     private snackBar: MatSnackBar
   ) {
@@ -282,12 +281,12 @@ export class QuizEditComponent implements OnInit, OnDestroy {
       });
       console.log(quiz);
       this.store.dispatch(
-        QuizzieActions.editQuiz({ quiz })
+        editQuiz({ quiz })
       );
     } else {
       const quiz = new Quiz(null, this.quizForm.value.name, this.quizForm.value.questions);
       this.store.dispatch(
-        QuizzieActions.createQuiz({ quiz })
+        createQuiz({ quiz })
       );
     }
   }

@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import * as AuthAction from './auth.actions';
-import { UserData, User } from '../../models/user.model';
+import { User } from '../../models/user.model';
+import { login, loginSucess, signup, authenticateFail, signUpFail, signupSucess, logout } from './auth.actions';
 
 
 
@@ -23,35 +23,35 @@ export const initialState: State = {
 
 const authReducer = createReducer(
   initialState,
-  on(AuthAction.login, state => ({ ...state, loading: true, isLoaded: false })),
+  on(login, state => ({ ...state, loading: true, isLoaded: false })),
   // tslint:disable-next-line: object-literal-shorthand
-  on(AuthAction.loginSucess, (state, { user }) => ({
+  on(loginSucess, (state, { user }) => ({
     ...state,
     user: new User(user.email, user.id, user._token, user._tokenExpirationDate),
     loading: false,
     isLoaded: true
   })),
-  on(AuthAction.signup, (state) => ({ ...state, loading: true, isLoaded: false })),
-  on(AuthAction.authenticateFail, (state, { error }) => ({
+  on(signup, (state) => ({ ...state, loading: true, isLoaded: false })),
+  on(authenticateFail, (state, { error }) => ({
     ...state,
     loading: false,
     authError: error,
     isLoaded: true
   })),
-  on(AuthAction.signUpFail, (state, { error }) => ({
+  on(signUpFail, (state, { error }) => ({
     ...state,
     loading: false,
     signUpError: error,
     isLoaded: true
   })),
-  on(AuthAction.signupSucess, (state) => ({
+  on(signupSucess, (state) => ({
     ...state,
     loading: false,
     signUpError: null,
     isLoaded: true
   })),
 
-  on(AuthAction.logout, (state) => ({
+  on(logout, (state) => ({
     ...state,
     user: null
   }))

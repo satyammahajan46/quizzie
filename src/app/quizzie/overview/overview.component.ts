@@ -2,13 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Quiz } from 'src/app/models/quiz.model';
-import * as fromApp from '../../appStore/app.reducer';
-import * as QuizzieActions from '../store/quizzie.actions'
 import { Question } from '../../models/quiz.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { selectStatData, selectStatsData } from '../../appStore/app.reducer';
+import { AppState, selectQuizzieQuiz, selectQuizzieQuizies, selectStatsData } from '../../appStore/app.reducer';
 import { Stat } from 'src/app/models/stat.model';
 import { MatSnackBar } from '@angular/material';
+import { loadQuiz, loadStats } from '../store/quizzie.actions';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -30,7 +29,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   bestScore: number;
   bestScoreName: string;
   constructor(
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
@@ -43,7 +42,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoaded = false;
-    this.storeQuizzieSub = this.store.select(fromApp.selectQuizzieQuizies).subscribe(quizzies => {
+    this.storeQuizzieSub = this.store.select(selectQuizzieQuizies).subscribe(quizzies => {
       // console.log(quizzies);
       if (quizzies && quizzies.length) {
         if (quizzies.length > 3) {
@@ -56,7 +55,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.storeQuizSub = this.store.select(fromApp.selectQuizzieQuiz).subscribe(quiz => {
+    this.storeQuizSub = this.store.select(selectQuizzieQuiz).subscribe(quiz => {
       // console.log(quiz);
       if (quiz) {
         this.loadedQuiz = quiz;
@@ -124,8 +123,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
     this.selectedQuiz = this.quizzies[index].name;
     // this.questions = this.quizzies[index].questions;
 
-    this.store.dispatch(QuizzieActions.loadQuiz({ id: this.quizzies[index].id }));
-    this.store.dispatch(QuizzieActions.loadStats({ quizID: this.quizzies[index].id }));
+    this.store.dispatch(loadQuiz({ id: this.quizzies[index].id }));
+    this.store.dispatch(loadStats({ quizID: this.quizzies[index].id }));
   }
 
   viewQuiz() {

@@ -3,13 +3,14 @@ import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSt
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import * as fromApp from '../appStore/app.reducer';
+
 import { MatSnackBar } from '@angular/material';
+import { AppState } from '../appStore/app.reducer';
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private router: Router,
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
     private snackBar: MatSnackBar
   ) { }
 

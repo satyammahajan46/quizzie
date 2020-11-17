@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MustMatch } from '../../shared/must.match.validator';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../appStore/app.reducer';
-import * as AuthActions from '../store/auth.actions';
+
 import { SignUpData } from '../../models/user.model';
-import { Subscription, Subject, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/appStore/app.reducer';
+import { signup } from '../store/auth.actions';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   private storeSub: Subscription;
   private error: [];
   private isLoadingResult: boolean;
-  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>) {
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
@@ -94,7 +95,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       password: this.signUpform.value.password,
       cPassword: this.signUpform.value.cPassword
     };
-    this.store.dispatch(AuthActions.signup(data));
+    this.store.dispatch(signup(data));
 
   }
 

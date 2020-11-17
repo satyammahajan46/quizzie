@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../appStore/app.reducer';
-import * as AuthActions from '../../auth/store/auth.actions'
-import { Router } from '@angular/router';
+import { logout } from '../../auth/store/auth.actions';
+import { AppState } from 'src/app/appStore/app.reducer';
 @Component({
   selector: 'app-main-header',
   templateUrl: './main-header.component.html',
@@ -18,7 +17,7 @@ export class MainHeaderComponent implements OnInit {
   isAuth = false;
   storeSub: Subscription;
   constructor(
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
   ) {
 
   }
@@ -47,7 +46,7 @@ export class MainHeaderComponent implements OnInit {
   }
   onSubmit() {
     if (this.isAuth) {
-      this.store.dispatch(AuthActions.logout());
+      this.store.dispatch(logout());
     }
   }
 }

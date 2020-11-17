@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { UserData, User } from '../../models/user.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { Observable, EMPTY, of } from 'rxjs';

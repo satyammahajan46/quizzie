@@ -3,9 +3,9 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { map, switchMap, take, mergeMap } from 'rxjs/operators';
+import { map, take, mergeMap } from 'rxjs/operators';
 import { AppState } from '../appStore/app.reducer';
-import * as QuizzieActions from './store/quizzie.actions';
+import { loadQuizzies, loadQuizziesComplete } from './store/quizzie.actions';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,9 +24,9 @@ export class LoadQuizzies {
       }),
       mergeMap(quizzies => {
         if (!quizzies || quizzies.length === 0) {
-          this.store.dispatch(QuizzieActions.loadQuizzies({ pageNumber: 1, items: 5 }));
+          this.store.dispatch(loadQuizzies({ pageNumber: 1, items: 5 }));
           return this.actions$.pipe(
-            ofType(QuizzieActions.loadQuizziesComplete),
+            ofType(loadQuizziesComplete),
             take(1)
           );
         } else {

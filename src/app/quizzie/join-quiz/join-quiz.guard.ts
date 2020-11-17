@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import * as fromApp from '../../appStore/app.reducer';
 import { MatSnackBar } from '@angular/material';
-import { selectQuizzie } from '../../appStore/app.reducer';
+import { AppState, selectQuizzie } from '../../appStore/app.reducer';
 @Injectable({ providedIn: 'root' })
 export class JoinQuizsGuard implements CanActivate {
   constructor(
     private router: Router,
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
     private snackBar: MatSnackBar
   ) { }
 

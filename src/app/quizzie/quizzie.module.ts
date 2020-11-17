@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { QuizzieRoutingModule } from './quizzie-routing.module';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// tslint:disable-next-line: max-line-length
 import { MatExpansionModule, MatFormFieldModule, MatPaginatorModule, MatProgressSpinnerModule, MatRadioModule, MatStepperModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';

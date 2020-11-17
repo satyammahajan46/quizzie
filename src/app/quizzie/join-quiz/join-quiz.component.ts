@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../appStore/app.reducer';
-import { Observable, Subscription, timer, of } from 'rxjs';
-import { Quiz } from 'src/app/models/quiz.model';
-import { loadJoinQuiz, loadQuizComplete, error } from '../store/quizzie.actions';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
-import { Actions, ofType } from '@ngrx/effects';
-import { mergeMap, take, map, catchError, distinctUntilChanged, debounceTime, first } from 'rxjs/operators';
+
+import { Subscription } from 'rxjs';
+
+import { loadJoinQuiz } from '../store/quizzie.actions';
+
+import { Actions } from '@ngrx/effects';
+
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { AppState, selectQuizzieQuiz } from 'src/app/appStore/app.reducer';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class JoinQuizComponent implements OnInit, OnDestroy {
   nameForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
     private router: Router,
     private route: ActivatedRoute,
     private actions$: Actions
@@ -47,7 +47,7 @@ export class JoinQuizComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]]
     });
 
-    this.storeQuizSub = this.store.select(fromApp.selectQuizzieQuiz).subscribe(q => {
+    this.storeQuizSub = this.store.select(selectQuizzieQuiz).subscribe(q => {
       if (q) {
         this.quizName = q.name;
         this.isValid = true;

@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as fromApp from '../../appStore/app.reducer';
+
 import { Store } from '@ngrx/store';
-import * as AuthActions from '../store/auth.actions';
+
 import { Subscription } from 'rxjs';
+import { AppState } from 'src/app/appStore/app.reducer';
+import { login } from '../store/auth.actions';
 
 @Component({
   selector: 'app-signin',
@@ -17,7 +19,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   private storeSub: Subscription;
   private error: string;
   private isLoadingResult: boolean;
-  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
   ngOnDestroy(): void {
     if (this.storeSub) {
       this.storeSub.unsubscribe();
@@ -41,7 +43,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     }
     // TODO: CREATE CONNECT WITH BACKEND USE STORE
     this.store.dispatch(
-      AuthActions.login({
+      login({
         userEmail: this.signInform.value.email,
         password: this.signInform.value.password
       })

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { map, mergeMap, catchError, switchMap, tap, exhaustMap } from 'rxjs/operators';
-import * as AuthActions from './auth.actions';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
+
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserData, User } from '../../models/user.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { loginSucess, authenticateFail, signUpFail, login, signup, signupSucess, autoLogin, logout } from './auth.actions';
 
 
 
@@ -16,22 +17,22 @@ const handleAuthentication = (
   user: UserData
 ) => {
   localStorage.setItem('userData', JSON.stringify(user));
-  return AuthActions.loginSucess({ user, msg: 'User Authenticated' });
+  return loginSucess({ user, msg: 'User Authenticated' });
 };
 
 const handleError = (errorRes: any) => {
   let errorMessage = 'An unknown error occurred!';
   if (!errorRes.error) {
-    return of(AuthActions.authenticateFail({ error: errorMessage }));
+    return of(authenticateFail({ error: errorMessage }));
   }
   if (errorRes.error.message) {
     errorMessage = errorRes.error.message;
   }
   if (errorRes.error.data) {
-    return of(AuthActions.signUpFail({ error: errorRes.error.data }));
+    return of(signUpFail({ error: errorRes.error.data }));
   }
 
-  return of(AuthActions.authenticateFail({ error: errorMessage }));
+  return of(authenticateFail({ error: errorMessage }));
 };
 
 @Injectable()
@@ -39,7 +40,7 @@ export class AuthEffects {
 
   loginStart$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.login),
+      ofType(login),
       mergeMap((action) => {
         // console.log();
         // const user = {
@@ -48,7 +49,7 @@ export class AuthEffects {
         //   _token: 'Retreive from backend',
         //   _tokenExpirationDate: new Date()
         // };
-        // return AuthActions.loginSucess({ user });
+        // return loginSucess({ user });
         // // return the http observalble
         // // return this.http
         return this.http.post<{ token: string, userId: string, expiresIn: string }>(environment.backEndURL + '/auth/login', {
@@ -76,7 +77,7 @@ export class AuthEffects {
 
   signupStart$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signup),
+      ofType(signup),
       mergeMap(action => {
         return this.http.post(environment.backEndURL + '/auth/signup', {
           email: action.email,
@@ -86,7 +87,7 @@ export class AuthEffects {
         }).pipe(
           map(resData => {
             console.log(resData);
-            return AuthActions.signupSucess();
+            return signupSucess();
           }),
           catchError((err: Error) => {
             return handleError(err);
@@ -98,7 +99,7 @@ export class AuthEffects {
 
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.loginSucess),
+      ofType(loginSucess),
       tap(action => {
         this.snackBar.open(action.msg, '', {
           duration: 3000,
@@ -111,7 +112,7 @@ export class AuthEffects {
 
   autoLogin$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.autoLogin),
+      ofType(autoLogin),
       map(() => {
         const userData: UserData = JSON.parse(localStorage.getItem('userData'));
         if (!userData) {
@@ -120,7 +121,7 @@ export class AuthEffects {
 
         const loadedUser = new User(userData.email, userData.id, userData._token, userData._tokenExpirationDate);
         if (loadedUser.getToken()) {
-          return AuthActions.loginSucess({ user: userData, msg: 'Welcome Back!' });
+          return loginSucess({ user: userData, msg: 'Welcome Back!' });
         }
         return { type: 'DUMMY' };
       })
@@ -129,7 +130,7 @@ export class AuthEffects {
 
   signupSucesst$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signupSucess),
+      ofType(signupSucess),
       tap(action => {
         this.snackBar.open('Signed Up Succesfully! Redirecting to login...', '', {
           duration: 3000,
@@ -142,7 +143,7 @@ export class AuthEffects {
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.logout),
+      ofType(logout),
       tap(action => {
         localStorage.removeItem('userData');
         this.snackBar.open('Logged Out Succesfully!', '', {
