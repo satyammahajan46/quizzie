@@ -141,7 +141,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         control.updateValueAndValidity();
       }
     });
-    console.log(this.signUpform);
+    // console.log(this.signUpform);
 
     // this.signUpform.updateValueAndValidity();
 

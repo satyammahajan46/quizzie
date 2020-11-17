@@ -38,7 +38,7 @@ export class ViewQuizziesComponent implements OnInit, OnDestroy {
   }
 
   updateQuizzies(event) {
-    console.log(event);
+    // console.log(event);
     this.store.dispatch(loadQuizzies({
       pageNumber: event.pageIndex + 1,
       items: event.pageSize
