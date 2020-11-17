@@ -12,8 +12,19 @@ const joinQuizRoutes = require("./routes/join-quiz");
 
 const app = express();
 
+mongoose
+  .connect(
+    process.env.CONNECT_URI,
+    { useFindAndModify: false }
+  )
+  .then((result) => {
+    console.log("Connection established with database");
+  })
+  .catch((err) => console.log(err));
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
+
+app.use("/", express.static(path.join(__dirname, "quizApp")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -25,11 +36,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", authRoutes);
+app.use("api/auth", authRoutes);
 
-app.use("/quizzie", quizzieRoutes);
+app.use("api/quizzie", quizzieRoutes);
 
-app.use("/join-quiz", joinQuizRoutes);
+app.use("api/join-quiz", joinQuizRoutes);
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "quizApp", "index.html"));
+});
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -39,14 +54,5 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
-mongoose
-  .connect(
-    `mongodb+srv://quizzieApp:6OmeOLA1tUmJRhfQ@quizzie.psn7y.mongodb.net/quizzie?retryWrites=true&w=majority`,
-    { useFindAndModify: false }
-  )
-  .then((result) => {
-    console.log("Connection established with database");
-  })
-  .catch((err) => console.log(err));
 
 module.exports = app;
