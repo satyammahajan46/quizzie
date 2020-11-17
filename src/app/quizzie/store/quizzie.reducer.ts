@@ -2,9 +2,8 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { Quiz, QuizError } from '../../models/quiz.model';
 import { Stat } from 'src/app/models/stat.model';
-import { error } from 'util';
 // tslint:disable-next-line: max-line-length
-import { loadQuizzies, loadStats, loadQuiz, createQuiz, cEQuizComplete, cEQuizError, loadQuizziesComplete, loadStatsComplete, loadQuizComplete, editQuiz, submitQuiz, submitQuizComplete } from './quizzie.actions';
+import { loadQuizzies, loadStats, loadQuiz, createQuiz, cEQuizComplete, cEQuizError, loadQuizziesComplete, loadStatsComplete, loadQuizComplete, editQuiz, submitQuiz, submitQuizComplete, error } from './quizzie.actions';
 
 
 
