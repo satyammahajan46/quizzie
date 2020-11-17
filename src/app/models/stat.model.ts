@@ -1,5 +1,3 @@
-import { Question } from './quiz.model';
-
 export class Stat {
   constructor(
     public id: string,

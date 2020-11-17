@@ -6,6 +6,10 @@ import { Stat } from '../../models/stat.model';
 export const LOADQUIZZIES = '[Quizzie Page] loadQuizzies';
 export const LOADQUIZZIESCOMPLETE = '[Quizzie Page] loadQuizziesComplete';
 
+
+export const LOADSTATS = '[Quizzie Page] loadStats';
+export const LOADSTATSCOMPLETE = '[Quizzie Page] loadStatsComplete';
+
 export const LOADQUIZ = '[Quizzie Page] loadQuiz';
 export const LOADJOINQUIZ = '[Quizzie Page] loadJoinQuiz';
 export const LOADQUIZCOMPLETE = '[Quizzie Page] loadQuizComplete';
@@ -38,6 +42,16 @@ export const loadQuizzies = createAction(LOADQUIZZIES, props<{
 
 export const loadQuizziesComplete = createAction(
   LOADQUIZZIESCOMPLETE, props<{ quizzies: Quiz[], totalItems: number }>()
+);
+
+
+
+export const loadStats = createAction(LOADSTATS, props<{
+  quizID: string
+}>());
+
+export const loadStatsComplete = createAction(
+  LOADSTATSCOMPLETE, props<{ stats: Stat[], totalItems: number }>()
 );
 
 

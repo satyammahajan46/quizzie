@@ -21,10 +21,11 @@ import { AuthEffects } from './auth/store/auth.effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CardsComponent } from './mainpage/cards/cards.component';
 
 
 @NgModule({
-  declarations: [AppComponent, MainpageComponent],
+  declarations: [AppComponent, MainpageComponent, CardsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -53,11 +53,11 @@
                    (ques.question)
                 }}
                 <span class="example-spacer"></span>
-                <button mat-icon-button>
+                <button (click)="underDev()" mat-icon-button>
                   <span>&nbsp;</span>
                   <mat-icon color="accent">edit</mat-icon>
                 </button>
-                <button mat-icon-button>
+                <button (click)="underDev()" mat-icon-button>
                   <span>&nbsp;</span>
                   <mat-icon color="warn">delete</mat-icon>
                 </button>
@@ -84,10 +84,25 @@
         </mat-card-title>
         <mat-divider></mat-divider>
         <mat-card-content>
-          <mat-list>
-            <mat-list-item> Under Progress... </mat-list-item>
-
+          <mat-list *ngIf="!loadedQuiz">
+            <mat-list-item> Please select a quiz </mat-list-item>
           </mat-list>
+          <mat-list *ngIf="!statData && loadedQuiz">
+            <mat-list-item> No stat's available... </mat-list-item>
+          </mat-list>
+          <div *ngIf="statData">
+            <div class="row">
+              <div class="col-sm-12">
+                <h5>Class Average: {{classAverage}}</h5>
+                <h5>Total Participants {{totalParticipants}}</h5>
+
+                <h5>Best Score: {{bestScore}}</h5>
+                <h5>Best Score by: {{bestScoreName}}</h5>
+              </div>
+            </div>
+          </div>
+
+
         </mat-card-content>
       </mat-card>
     </div>

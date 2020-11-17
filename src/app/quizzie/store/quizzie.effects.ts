@@ -197,6 +197,62 @@ export class QuizzieEffects {
     ) // action pipe ending
   );
 
+  loadStats$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QuizActions.loadStats),
+      mergeMap((action) => {
+
+        return this.http.get<{
+          message: string,
+          stats: any,
+          totalItems: number
+        }>(environment.backEndURL + '/join-quiz/quiz-stat/' + action.quizID)
+          .pipe(
+            map(resData => {
+              // this.snackBar.open('Quiz Created Succesfully. Redirecting back to dashboard!', '', {
+              //   duration: 3000,
+              //   panelClass: ['pop-up-msg']
+              // });
+              const stats = resData.stats;
+              const parsedData: Stat[] = Array();
+              for (const stat of stats) {
+                const data = stat;
+                const aStat: Stat = {
+                  id: data._id,
+                  name: data.name,
+                  quizID: data.quizID,
+                  correctAnswers: data.correctAnswer,
+                  totalQuestions: data.totalQues,
+                  correctAnswerID: data.correctAnswersID
+                };
+
+                parsedData.push(
+                  aStat
+                );
+              }
+              return QuizActions.loadStatsComplete({ stats: parsedData, totalItems: +resData.totalItems });
+            }),
+            catchError((err: any) => {
+              let msg = 'An unknown error occured!';
+              if (err.message) {
+                msg = err.message;
+              }
+              if (err.error && err.error.message) {
+                msg = err.error.message;
+              }
+              this.snackBar.open(msg, '', {
+                duration: 3000,
+                panelClass: ['danger-pop-up-msg']
+              });
+              return of(QuizActions.error({ error: msg }));
+            })
+          );
+      })
+    ) // action pipe ending
+  );
+
+
+
 
   loadQuiz$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(

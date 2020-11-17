@@ -32,9 +32,11 @@ exports.getQuizzies = async (req, res, next) => {
       //.populate("questions");
     }
     if (!quizzies.length) {
-      const error = new Error("No quizzies found!");
-      error.statusCode = 404;
-      return next(error);
+      return res.status(200).json({
+        message: "No Quiz Available.",
+        quizzies: [],
+        totalItems: 0,
+      });
     }
 
     res.status(200).json({

@@ -1,11 +1,14 @@
 const express = require("express");
 const { body } = require("express-validator");
+const isAuth = require("../middleware/is-auth");
 
 const joinQuizController = require("../controllers/join-quiz");
 
 const router = express.Router();
 
 router.get("/:pin", joinQuizController.getJoinQuiz);
+
+router.get("/quiz-stat/:id", isAuth, joinQuizController.getAllStats);
 
 router.post(
   "/submitquiz",

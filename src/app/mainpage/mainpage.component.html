@@ -13,16 +13,27 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row m-1 text-align-center">
   <div class="col-md-12">
-    <mat-card>
-      <mat-card-title>Everything Simplified</mat-card-title>
-      <mat-card-subtitle>Dashboard</mat-card-subtitle>
-      <mat-card-content>Qucikly create a quiz from scratch and make it visible to public to let other join and play!
-      </mat-card-content>
+    <app-cards title="Everything Simplified" subtitle="Dashboard"
+      description="All the required info in front of the eyes at one spot that is your own dashboard!"
+      imageSrc="/assets/images/dashboard.PNG"></app-cards>
+  </div>
+</div>
 
-      <img mat-card-image [src]="imageSrc">
-    </mat-card>
+<div class="row m-1 text-align-center">
+  <div class="col-md-12">
+    <app-cards title="Create Quiz in few minutes" subtitle="Create Quiz"
+      description="Quickly create a quiz from scratch and make it visible to public to let other join and play!"
+      imageSrc="/assets/images/createQuiz.png"></app-cards>
+  </div>
+</div>
+
+<div class="row m-1 text-align-center">
+  <div class="col-md-12">
+    <app-cards title="Join Quiz Instantly" subtitle="Join Quiz"
+      description="Just provide a join pin to the participants and get started with the fun quiz!"
+      imageSrc="/assets/images/joinQuiz.PNG"></app-cards>
   </div>
 </div>
 

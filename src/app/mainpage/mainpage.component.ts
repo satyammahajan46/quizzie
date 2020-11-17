@@ -13,7 +13,7 @@ export class MainpageComponent implements OnInit {
   isLoaded: boolean;
   constructor() {
     this.isLoaded = false;
-    this.imageSrc = 'assets/images/stayinlimits.png';
+    this.imageSrc = 'assets/images/dashboard.png';
   }
 
   ngOnInit() { }

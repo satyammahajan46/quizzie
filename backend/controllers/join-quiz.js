@@ -3,6 +3,7 @@ const Question = require("../models/question");
 const Stat = require("../models/stats");
 
 const { validationResult } = require("express-validator/check");
+const { Stats } = require("fs");
 
 exports.submitQuiz = async (req, res, next) => {
   try {
@@ -99,6 +100,43 @@ exports.getJoinQuiz = async (req, res, next) => {
       message: "Here is your requested data",
       quiz: quiz,
     });
+  } catch (err) {
+    const error = new Error("Unknown error occured");
+    error.statusCode = 500;
+    error.data = err;
+    next(error);
+  }
+};
+
+exports.getAllStats = async (req, res, next) => {
+  try {
+    const user = req.userId;
+    const quizID = req.params.id;
+    const quiz = await Quiz.findOne({
+      $and: [{ _id: quizID }, { userID: user }],
+    }).populate("statID");
+
+    if (!quiz) {
+      const error = new Error("No quizzies found!");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    const statsItems = quiz.statID.length;
+
+    if (!statsItems) {
+      return res.json({
+        message: "no stats available",
+        totalItems: statsItems,
+        stats: [],
+      });
+    } else {
+      return res.json({
+        message: "Here is your requested data",
+        totalItems: statsItems,
+        stats: quiz.statID,
+      });
+    }
   } catch (err) {
     const error = new Error("Unknown error occured");
     error.statusCode = 500;

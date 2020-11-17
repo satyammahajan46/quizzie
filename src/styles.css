@@ -165,10 +165,6 @@ a:hover {
   width: 100%
 }
 
-.background-img {
-  background-image: url('./assets/images/background.jpg');
-}
-
 
 .min-height-inherit {
   min-height: inherit;

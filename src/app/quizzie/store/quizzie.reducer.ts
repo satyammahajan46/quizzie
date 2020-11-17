@@ -14,6 +14,8 @@ export interface State {
   quizData: Quiz;
   cEditError: QuizError;
   statData: Stat;
+  stats: Stat[];
+  totalStats: number;
 }
 
 export const initialState: State = {
@@ -23,13 +25,16 @@ export const initialState: State = {
   quizData: null,
   cEditError: null,
   totalQuiz: 0,
-  statData: null
+  statData: null,
+  stats: null,
+  totalStats: 0
 };
 
 
 const quizzieReducer = createReducer(
   initialState,
   on(QuizzieActions.loadQuizzies, state => ({ ...state, loading: true, isLoaded: false })),
+  on(QuizzieActions.loadStats, state => ({ ...state, loading: true, isLoaded: false })),
   on(QuizzieActions.loadQuiz, state => ({ ...state, loading: true, isLoaded: false })),
   on(QuizzieActions.createQuiz, state => ({
     ...state,
@@ -53,6 +58,13 @@ const quizzieReducer = createReducer(
     isLoaded: true,
     quizzies,
     totalQuiz: totalItems
+  })),
+  on(QuizzieActions.loadStatsComplete, (state, { stats, totalItems }) => ({
+    ...state,
+    loading: false,
+    isLoaded: true,
+    stats,
+    totalStats: totalItems
   })),
   on(QuizzieActions.error, state => ({
     ...state,
