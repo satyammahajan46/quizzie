@@ -33,11 +33,11 @@ app.use("/", express.static(path.join(__dirname, "quizApp")));
 //   next();
 // });
 
-app.use("api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
-app.use("api/quizzie", quizzieRoutes);
+app.use("/api/quizzie", quizzieRoutes);
 
-app.use("api/join-quiz", joinQuizRoutes);
+app.use("/api/join-quiz", joinQuizRoutes);
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "quizApp", "index.html"));
