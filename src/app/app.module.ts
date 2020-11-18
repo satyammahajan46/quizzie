@@ -19,7 +19,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CardsComponent } from './mainpage/cards/cards.component';
 import { appReducer } from './appStore/app.reducer';
-import { extModules } from './build-specifics/indes.prod';
+import { extModules } from './build-specifics/index.prod';
 
 
 @NgModule({
