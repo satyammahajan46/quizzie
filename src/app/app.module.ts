@@ -11,9 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,6 +19,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CardsComponent } from './mainpage/cards/cards.component';
 import { appReducer } from './appStore/app.reducer';
+import { extModules } from './build-specifics/indes.prod';
 
 
 @NgModule({
@@ -36,12 +35,9 @@ import { appReducer } from './appStore/app.reducer';
     MatButtonModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects]),
-    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
+    extModules
+
   ],
   providers: [Title,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
