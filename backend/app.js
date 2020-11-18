@@ -4,8 +4,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const sslRedirect = require("heroku-ssl-redirect");
-
 const authRoutes = require("./routes/auth");
 
 const quizzieRoutes = require("./routes/quizzie");
@@ -14,7 +12,13 @@ const joinQuizRoutes = require("./routes/join-quiz");
 
 const app = express();
 
-app.use(sslRedirect());
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
 
 mongoose
   .connect(process.env.CONNECT_URI, { useFindAndModify: false })
