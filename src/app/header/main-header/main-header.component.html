@@ -1,8 +1,9 @@
  <mat-toolbar color="primary">
-   <button mat-icon-button routerLink="/home">
-     <mat-icon>menu</mat-icon>
+   <button [style.display]="isAuth?'inline-block': 'none'" mat-button routerLink="/home">
+     <mat-icon *ngIf="isAuth">home</mat-icon>
+     <span *ngIf="isAuth">Quizzie</span>
    </button>
-   <span>Quizzie</span>
+   <span *ngIf="!isAuth">Quizzie</span>
    <span class="example-spacer"></span>
 
    <button mat-button routerLink={{homeDashboard.link}} routerLinkActive="mat-accent"

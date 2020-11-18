@@ -4,6 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const sslRedirect = require("heroku-ssl-redirect");
+
 const authRoutes = require("./routes/auth");
 
 const quizzieRoutes = require("./routes/quizzie");
@@ -11,6 +13,8 @@ const quizzieRoutes = require("./routes/quizzie");
 const joinQuizRoutes = require("./routes/join-quiz");
 
 const app = express();
+
+app.use(sslRedirect());
 
 mongoose
   .connect(process.env.CONNECT_URI, { useFindAndModify: false })
