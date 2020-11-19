@@ -2,26 +2,27 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.2.
 
-## Development server
+The quizzie is a web app built to help with the process of taking quizzies. It provides a fast way for teachers to create quiz, and provide unique pin to students to start the quiz.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Technical Specifications🔥
+Bootstrap 4
+AngularJS
+NodeJS
+ExpressJS
+CSS
+JavaScript/HTML/CSS
+Saas
+NoSql
+MEAN stack
 
-## Code scaffolding
+# Project Requirements 
+The app was designed for a simple task helping teachers to create quiz. The main concept here is that students who are enrolled in the course can start giving a specific quiz provided by their teachers. Although, from teacher dashboard teachers are allowed to create and edit the book (teacher's dashboard is available to all user who create the account). In the future, the app will increase its functionality to create a timed quiz and shut down the created quiz after class.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Challenges & Solutions
+# Database Schema
+The main goal was to make the database efficient and fast with interactive UI since everything was being built from scratch.
 
-## Build
+The solution was very simple, follow industry-standard methods to create wireframes and schema requirements to find loopholes before jumping into the development.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# How it works
+This web app lets users create/login in into the system with their own account. NodeJS does the magic for creating access token for logging users into the system and logging out using JWT. This app used non-relational databases NoSql. The interactive UI is created using AngularJS/Angular Material Design libraries and advanced HTML/CSS.
