@@ -5,15 +5,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 The quizzie is a web app built to help with the process of taking quizzies. It provides a fast way for teachers to create quiz, and provide unique pin to students to start the quiz.
 
 # Technical Specifications🔥
-Bootstrap 4
-AngularJS
-NodeJS
-ExpressJS
-CSS
-JavaScript/HTML/CSS
-Saas
-NoSql
-MEAN stack
+* Bootstrap 4
+* AngularJS
+* NodeJS
+* ExpressJS
+* CSS
+* JavaScript/HTML/CSS
+* Saas
+* NoSql
+* MEAN stack
 
 # Project Requirements 
 The app was designed for a simple task helping teachers to create quiz. The main concept here is that students who are enrolled in the course can start giving a specific quiz provided by their teachers. Although, from teacher dashboard teachers are allowed to create and edit the book (teacher's dashboard is available to all user who create the account). In the future, the app will increase its functionality to create a timed quiz and shut down the created quiz after class.
