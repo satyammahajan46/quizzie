@@ -1,4 +1,4 @@
-# QuizApp
+# QuizApp 😀
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.2.
 
@@ -22,7 +22,7 @@ The app was designed for a simple task helping teachers to create quiz. The main
 # Database Schema
 The main goal was to make the database efficient and fast with interactive UI since everything was being built from scratch.
 
-The solution was very simple, follow industry-standard methods to create wireframes and schema requirements to find loopholes before jumping into the development.
+The solution was very simple, follow industry-standard methods to create wireframes and schema requirements to find loopholes before jumping into the development. 
 
 # How it works
-This web app lets users create/login in into the system with their own account. NodeJS does the magic for creating access token for logging users into the system and logging out using JWT. This app used non-relational databases NoSql. The interactive UI is created using AngularJS/Angular Material Design libraries and advanced HTML/CSS.
+This web app lets users create/login in into the system with their own account. NodeJS does the magic for creating access token for logging users into the system and logging out using JWT. This app used non-relational databases NoSql. The interactive UI is created using AngularJS/Angular Material Design libraries and advanced HTML/CSS. 😎
